@@ -19,6 +19,7 @@ PLANES_LIST_FILE = PLANES_DIR / "planes.txt"
 PLANES_CATALOG_FILE = PLANES_DIR / "planes.json"
 CREATE_NEW_PROFILE = "Create New Player Profile"
 CREATE_NEW_COMMANDER_PROFILE = "Create New Commander Profile"
+APP_VERSION = "1.0"
 
 
 def resolve_app_path(path_value):
@@ -133,6 +134,7 @@ class MagicApp(tk.Tk):
         self.plane_canvas = None
         self.leaderboards_screen = None
         self.leaderboards_panel_window = None
+        self.version_label = None
         self.game_winner_index = None
         self.game_win_recorded = False
         self.game_background_images = {}
@@ -2456,6 +2458,23 @@ class MagicApp(tk.Tk):
         self._unbind_game_keys()
         for widget in self.winfo_children():
             widget.destroy()
+        self.after_idle(self._show_version_label)
+
+    def _show_version_label(self):
+        if self.version_label is not None and self.version_label.winfo_exists():
+            self.version_label.destroy()
+
+        self.version_label = tk.Label(
+            self,
+            text=f"v{APP_VERSION}",
+            bg="#000000",
+            fg="#ffffff",
+            font=("Arial", 9, "bold"),
+            padx=6,
+            pady=3,
+        )
+        self.version_label.place(relx=1.0, rely=1.0, x=-8, y=-8, anchor="se")
+        self.version_label.lift()
 
     def _show_game_screen(self):
         self._clear_window()
@@ -2765,6 +2784,7 @@ class MagicApp(tk.Tk):
 
     def _maximize_window(self):
         try:
+            self.attributes("-fullscreen", False)
             self.state("zoomed")
         except tk.TclError:
             width = self.winfo_screenwidth()

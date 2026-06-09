@@ -1,6 +1,6 @@
 {
   "settings": {
-    "number_of_players": 3,
+    "number_of_players": 4,
     "starting_life_total": 40,
     "game_type": "Commander",
     "planechase_enabled": false
@@ -1135,12 +1135,14 @@
     "player_names": [
       "Merna",
       "Sharpie",
-      "Strobel"
+      "Strobel",
+      "Mike"
     ],
     "commander_names": [
-      "Aragorn, King of Gondor",
-      "Morska, Undersea Sleuth",
-      "Shiko and Narset, Unified"
+      "Hearthhull, the Worldseed",
+      "Fynn, the Fangbearer",
+      "Chulane , Teller of Tales",
+      "Hakbal of the Surging Soul"
     ]
   }
 }
