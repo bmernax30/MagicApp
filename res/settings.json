@@ -1,0 +1,1146 @@
+{
+  "settings": {
+    "number_of_players": 3,
+    "starting_life_total": 40,
+    "game_type": "Commander",
+    "planechase_enabled": false
+  },
+  "player_profiles": {
+    "Zach": [
+      "Amalia Benavides Aguirre",
+      "Arabella, Abandoned Doll",
+      "Tinybones, Bauble Burglar",
+      "Averna, the Chaos Bloom",
+      "Samut, Vizier of Naktamun",
+      "Satoru Umezawa",
+      "Auntie Ool, Cursewretch",
+      "Don Andres, the Renegade",
+      "Doran, Besieged by Time",
+      "Kona, Rescue Beastie",
+      "Niki, Light of Hope",
+      "Teval, the Balanced Scale",
+      "Vren, the Relentless",
+      "Wick, the Whorled Mind",
+      "Zimone, Mystery Unraveler",
+      "Ygra, Eater of All",
+      "Inspirit, Flagship Vessel",
+      "Ganax, Astral Hunter / Agent of the Iron Throne",
+      "Lae'zel, Vlaakith's Champion / Master Chef",
+      "Livaan, Cultist of Tiamat / Sword Coast Sailor"
+    ],
+    "Merna": [
+      "High Perfect Morcant",
+      "Bilbo, Retired Burglar",
+      "Eluge, the Shoreless Sea",
+      "Ureni of the Unwritten",
+      "Hearthhull, the Worldseed",
+      "King Darien XLVIII",
+      "Garna, Bloodfist of Keld",
+      "Denethor, Ruling Steward",
+      "Bumi, Unleashed",
+      "Aragorn, King of Gondor",
+      "Ashling, the Limitless",
+      "Kamiz, Obscura Oculus"
+    ],
+    "Strobel": [
+      "Quintorius, History Chaser",
+      "Volo, Guide to Monsters",
+      "Urza, Lord Protector",
+      "Shiko and Narset, Unified",
+      "Caeser, Legion's Emperor",
+      "Kotis, the Fangkeeper",
+      "Obeka, Splitter of Seconds",
+      "Ramos, Dragon Engine",
+      "Ms. Bumbleflower",
+      "Leonardo, the Balance / Michelangelo, the Heart",
+      "Chulane , Teller of Tales",
+      "AminatouVeilPiercer",
+      "Tifa, Martial Artist"
+    ],
+    "Sharpie": [
+      "Morska, Undersea Sleuth",
+      "Sam, Loyal Attendant",
+      "Kotis, the Fangkeeper",
+      "AminatouVeilPiercer",
+      "Chatterfang, Squirrel General",
+      "Fynn, the Fangbearer",
+      "Maralen, Fae Ascendant"
+    ],
+    "Mike": [
+      "Hakbal of the Surging Soul"
+    ],
+    "Deeks": [
+      "The Scarab God"
+    ],
+    "Val": [
+      "Ms. Bumbleflower"
+    ]
+  },
+  "player_profile_wins": {
+    "Strobel": 0,
+    "Sharpie": 0,
+    "Zach": 1
+  },
+  "last_profile_name": "Zach",
+  "commander_profiles": {
+    "Amalia Benavides Aguirre": {
+      "primary_name": "Amalia Benavides Aguirre",
+      "image_path": "res/commanders/AmaliaBenavidesAguirre.png",
+      "text_path": "res/commanders/commander_text/commander_text.txt",
+      "total_wins": 0,
+      "colors": [
+        "black",
+        "white"
+      ],
+      "second_commander": {
+        "enabled": false,
+        "name": "",
+        "image_path": "",
+        "text_path": "",
+        "colors": []
+      }
+    },
+    "Arabella, Abandoned Doll": {
+      "primary_name": "Arabella, Abandoned Doll",
+      "image_path": "res/commanders/ArabellaAbandonedDoll.png",
+      "text_path": "res/commanders/commander_text/commander_text.txt",
+      "total_wins": 0,
+      "colors": [
+        "red",
+        "white"
+      ],
+      "second_commander": {
+        "enabled": false,
+        "name": "",
+        "image_path": "",
+        "text_path": "",
+        "colors": []
+      }
+    },
+    "Tinybones, Bauble Burglar": {
+      "primary_name": "Tinybones, Bauble Burglar",
+      "image_path": "res/commanders/TinybonesBaubleBurglar.png",
+      "text_path": "res/commanders/commander_text/commander_text.txt",
+      "total_wins": 0,
+      "colors": [
+        "black"
+      ],
+      "second_commander": {
+        "enabled": false,
+        "name": "",
+        "image_path": "",
+        "text_path": "",
+        "colors": []
+      }
+    },
+    "Averna, the Chaos Bloom": {
+      "primary_name": "Averna, the Chaos Bloom",
+      "image_path": "res/commanders/AvernaTheChaosBloom.png",
+      "text_path": "res/commanders/commander_text/commander_text.txt",
+      "total_wins": 0,
+      "colors": [
+        "blue",
+        "green",
+        "red"
+      ],
+      "second_commander": {
+        "enabled": false,
+        "name": "",
+        "image_path": "",
+        "text_path": "",
+        "colors": []
+      }
+    },
+    "Samut, Vizier of Naktamun": {
+      "primary_name": "Samut, Vizier of Naktamun",
+      "image_path": "res/commanders/SamutVizierOfNakamun.png",
+      "text_path": "res/commanders/commander_text/commander_text.txt",
+      "total_wins": 1,
+      "colors": [
+        "green",
+        "red"
+      ],
+      "second_commander": {
+        "enabled": false,
+        "name": "",
+        "image_path": "",
+        "text_path": "",
+        "colors": []
+      }
+    },
+    "Satoru Umezawa": {
+      "primary_name": "Satoru Umezawa",
+      "image_path": "res/commanders/SatoruUmezawa.png",
+      "text_path": "res/commanders/commander_text/commander_text.txt",
+      "total_wins": 0,
+      "colors": [
+        "black",
+        "blue"
+      ],
+      "second_commander": {
+        "enabled": false,
+        "name": "",
+        "image_path": "",
+        "text_path": "",
+        "colors": []
+      }
+    },
+    "Auntie Ool, Cursewretch": {
+      "primary_name": "Auntie Ool, Cursewretch",
+      "image_path": "res/commanders/AuntieOolCursewretch.png",
+      "text_path": "res/commanders/commander_text/commander_text.txt",
+      "total_wins": 0,
+      "colors": [
+        "black",
+        "green",
+        "red"
+      ],
+      "second_commander": {
+        "enabled": false,
+        "name": "",
+        "image_path": "",
+        "text_path": "",
+        "colors": []
+      }
+    },
+    "Don Andres, the Renegade": {
+      "primary_name": "Don Andres, the Renegade",
+      "image_path": "res/commanders/DonAndresTheRenegade.png",
+      "text_path": "res/commanders/commander_text/commander_text.txt",
+      "total_wins": 0,
+      "colors": [
+        "black",
+        "blue",
+        "red"
+      ],
+      "second_commander": {
+        "enabled": false,
+        "name": "",
+        "image_path": "",
+        "text_path": "",
+        "colors": []
+      }
+    },
+    "Doran, Besieged by Time": {
+      "primary_name": "Doran, Besieged by Time",
+      "image_path": "res/commanders/DoranBeseigedByTime.png",
+      "text_path": "res/commanders/commander_text/commander_text.txt",
+      "total_wins": 0,
+      "colors": [
+        "black",
+        "green",
+        "white"
+      ],
+      "second_commander": {
+        "enabled": false,
+        "name": "",
+        "image_path": "",
+        "text_path": "",
+        "colors": []
+      }
+    },
+    "Kona, Rescue Beastie": {
+      "primary_name": "Kona, Rescue Beastie",
+      "image_path": "res/commanders/KonaRescueBeastie.png",
+      "text_path": "res/commanders/commander_text/commander_text.txt",
+      "total_wins": 0,
+      "colors": [
+        "green"
+      ],
+      "second_commander": {
+        "enabled": false,
+        "name": "",
+        "image_path": "",
+        "text_path": "",
+        "colors": []
+      }
+    },
+    "Niki, Light of Hope": {
+      "primary_name": "Niki, Light of Hope",
+      "image_path": "res/commanders/NikoLightOfHope.png",
+      "text_path": "res/commanders/commander_text/commander_text.txt",
+      "total_wins": 0,
+      "colors": [
+        "blue",
+        "white"
+      ],
+      "second_commander": {
+        "enabled": false,
+        "name": "",
+        "image_path": "",
+        "text_path": "",
+        "colors": []
+      }
+    },
+    "Teval, the Balanced Scale": {
+      "primary_name": "Teval, the Balanced Scale",
+      "image_path": "res/commanders/TevalTheBalancedScale.png",
+      "text_path": "res/commanders/commander_text/commander_text.txt",
+      "total_wins": 0,
+      "colors": [
+        "black",
+        "blue",
+        "green"
+      ],
+      "second_commander": {
+        "enabled": false,
+        "name": "",
+        "image_path": "",
+        "text_path": "",
+        "colors": []
+      }
+    },
+    "Vren, the Relentless": {
+      "primary_name": "Vren, the Relentless",
+      "image_path": "res/commanders/VrenTheUnrelentless.png",
+      "text_path": "res/commanders/commander_text/commander_text.txt",
+      "total_wins": 0,
+      "colors": [
+        "black",
+        "blue"
+      ],
+      "second_commander": {
+        "enabled": false,
+        "name": "",
+        "image_path": "",
+        "text_path": "",
+        "colors": []
+      }
+    },
+    "Wick, the Whorled Mind": {
+      "primary_name": "Wick, the Whorled Mind",
+      "image_path": "res/commanders/WickTheWhorledMind.png",
+      "text_path": "res/commanders/commander_text/commander_text.txt",
+      "total_wins": 0,
+      "colors": [
+        "black",
+        "blue",
+        "red"
+      ],
+      "second_commander": {
+        "enabled": false,
+        "name": "",
+        "image_path": "",
+        "text_path": "",
+        "colors": []
+      }
+    },
+    "Zimone, Mystery Unraveler": {
+      "primary_name": "Zimone, Mystery Unraveler",
+      "image_path": "res/commanders/ZimoneMysteryUnraveler.png",
+      "text_path": "res/commanders/commander_text/commander_text.txt",
+      "total_wins": 0,
+      "colors": [
+        "blue",
+        "green"
+      ],
+      "second_commander": {
+        "enabled": false,
+        "name": "",
+        "image_path": "",
+        "text_path": "",
+        "colors": []
+      }
+    },
+    "Ygra, Eater of All": {
+      "primary_name": "Ygra, Eater of All",
+      "image_path": "res/commanders/YgraEaterOfAll.png",
+      "text_path": "res/commanders/commander_text/commander_text.txt",
+      "total_wins": 0,
+      "colors": [
+        "black",
+        "green"
+      ],
+      "second_commander": {
+        "enabled": false,
+        "name": "",
+        "image_path": "",
+        "text_path": "",
+        "colors": []
+      }
+    },
+    "Inspirit, Flagship Vessel": {
+      "primary_name": "Inspirit, Flagship Vessel",
+      "image_path": "res/commanders/InspiritFlagshipVessel.png",
+      "text_path": "res/commanders/commander_text/commander_text.txt",
+      "total_wins": 0,
+      "colors": [
+        "blue",
+        "red",
+        "white"
+      ],
+      "second_commander": {
+        "enabled": false,
+        "name": "",
+        "image_path": "",
+        "text_path": "",
+        "colors": []
+      }
+    },
+    "High Perfect Morcant": {
+      "primary_name": "High Perfect Morcant",
+      "image_path": "res/commanders/HighPerfectMorcant.png",
+      "text_path": "res/commanders/commander_text/commander_text.txt",
+      "total_wins": 0,
+      "colors": [
+        "black",
+        "green"
+      ],
+      "second_commander": {
+        "enabled": false,
+        "name": "",
+        "image_path": "",
+        "text_path": "",
+        "colors": []
+      }
+    },
+    "Bilbo, Retired Burglar": {
+      "primary_name": "Bilbo, Retired Burglar",
+      "image_path": "res/commanders/BilboRetiredBurglar.png",
+      "text_path": "res/commanders/commander_text/commander_text.txt",
+      "total_wins": 1,
+      "colors": [
+        "blue",
+        "red"
+      ],
+      "second_commander": {
+        "enabled": false,
+        "name": "",
+        "image_path": "",
+        "text_path": "",
+        "colors": []
+      }
+    },
+    "Eluge, the Shoreless Sea": {
+      "primary_name": "Eluge, the Shoreless Sea",
+      "image_path": "res/commanders/ElugeTheShorelessSea.png",
+      "text_path": "res/commanders/commander_text/commander_text.txt",
+      "total_wins": 0,
+      "colors": [
+        "blue"
+      ],
+      "second_commander": {
+        "enabled": false,
+        "name": "",
+        "image_path": "",
+        "text_path": "",
+        "colors": []
+      }
+    },
+    "Ureni of the Unwritten": {
+      "primary_name": "Ureni of the Unwritten",
+      "image_path": "res/commanders/UreniofTheUnwritten.png",
+      "text_path": "res/commanders/commander_text/commander_text.txt",
+      "total_wins": 0,
+      "colors": [
+        "blue",
+        "green",
+        "red"
+      ],
+      "second_commander": {
+        "enabled": false,
+        "name": "",
+        "image_path": "",
+        "text_path": "",
+        "colors": []
+      }
+    },
+    "Hearthhull, the Worldseed": {
+      "primary_name": "Hearthhull, the Worldseed",
+      "image_path": "res/commanders/HearthhullTheWorldseed.png",
+      "text_path": "res/commanders/commander_text/commander_text.txt",
+      "total_wins": 0,
+      "colors": [
+        "black",
+        "blue",
+        "green"
+      ],
+      "second_commander": {
+        "enabled": false,
+        "name": "",
+        "image_path": "",
+        "text_path": "",
+        "colors": []
+      }
+    },
+    "King Darien XLVIII": {
+      "primary_name": "King Darien XLVIII",
+      "image_path": "res/commanders/KingDarienXLVIII.png",
+      "text_path": "res/commanders/commander_text/commander_text.txt",
+      "total_wins": 0,
+      "colors": [
+        "green",
+        "white"
+      ],
+      "second_commander": {
+        "enabled": false,
+        "name": "",
+        "image_path": "",
+        "text_path": "",
+        "colors": []
+      }
+    },
+    "Garna, Bloodfist of Keld": {
+      "primary_name": "Garna, Bloodfist of Keld",
+      "image_path": "res/commanders/GarnaBloodfistOfKeld.png",
+      "text_path": "res/commanders/commander_text/commander_text.txt",
+      "total_wins": 0,
+      "colors": [
+        "black",
+        "red"
+      ],
+      "second_commander": {
+        "enabled": false,
+        "name": "",
+        "image_path": "",
+        "text_path": "",
+        "colors": []
+      }
+    },
+    "Denethor, Ruling Steward": {
+      "primary_name": "Denethor, Ruling Steward",
+      "image_path": "res/commanders/DenethorRulingSteward.png",
+      "text_path": "res/commanders/commander_text/commander_text.txt",
+      "total_wins": 0,
+      "colors": [
+        "black",
+        "white"
+      ],
+      "second_commander": {
+        "enabled": false,
+        "name": "",
+        "image_path": "",
+        "text_path": "",
+        "colors": []
+      }
+    },
+    "Bumi, Unleashed": {
+      "primary_name": "Bumi, Unleashed",
+      "image_path": "res/commanders/BumiUnleashed.png",
+      "text_path": "res/commanders/commander_text/commander_text.txt",
+      "total_wins": 0,
+      "colors": [
+        "green",
+        "red"
+      ],
+      "second_commander": {
+        "enabled": false,
+        "name": "",
+        "image_path": "",
+        "text_path": "",
+        "colors": []
+      }
+    },
+    "Aragorn, King of Gondor": {
+      "primary_name": "Aragorn, King of Gondor",
+      "image_path": "res/commanders/AragornKingofGondor.png",
+      "text_path": "res/commanders/commander_text/commander_text.txt",
+      "total_wins": 0,
+      "colors": [
+        "blue",
+        "red"
+      ],
+      "second_commander": {
+        "enabled": false,
+        "name": "",
+        "image_path": "",
+        "text_path": "",
+        "colors": []
+      }
+    },
+    "Ashling, the Limitless": {
+      "primary_name": "Ashling, the Limitless",
+      "image_path": "res/commanders/AshlingtheLimitless.png",
+      "text_path": "res/commanders/commander_text/commander_text.txt",
+      "total_wins": 0,
+      "colors": [
+        "black",
+        "blue",
+        "green",
+        "red",
+        "white"
+      ],
+      "second_commander": {
+        "enabled": false,
+        "name": "",
+        "image_path": "",
+        "text_path": "",
+        "colors": []
+      }
+    },
+    "Kamiz, Obscura Oculus": {
+      "primary_name": "Kamiz, Obscura Oculus",
+      "image_path": "res/commanders/KamizObscuraOculus.png",
+      "text_path": "res/commanders/commander_text/commander_text.txt",
+      "total_wins": 0,
+      "colors": [
+        "black",
+        "blue",
+        "white"
+      ],
+      "second_commander": {
+        "enabled": false,
+        "name": "",
+        "image_path": "",
+        "text_path": "",
+        "colors": []
+      }
+    },
+    "Quintorius, History Chaser": {
+      "primary_name": "Quintorius, History Chaser",
+      "image_path": "res/commanders/QuintoriusHistoryChaser.png",
+      "text_path": "res/commanders/commander_text/commander_text.txt",
+      "total_wins": 0,
+      "colors": [
+        "red",
+        "white"
+      ],
+      "second_commander": {
+        "enabled": false,
+        "name": "",
+        "image_path": "",
+        "text_path": "",
+        "colors": []
+      }
+    },
+    "Morska, Undersea Sleuth": {
+      "primary_name": "Morska, Undersea Sleuth",
+      "image_path": "res/commanders/MorskaUnderseaSleuth.png",
+      "text_path": "res/commanders/commander_text/commander_text.txt",
+      "total_wins": 0,
+      "colors": [
+        "blue",
+        "green"
+      ],
+      "second_commander": {
+        "enabled": false,
+        "name": "",
+        "image_path": "",
+        "text_path": "",
+        "colors": []
+      }
+    },
+    "Hakbal of the Surging Soul": {
+      "primary_name": "Hakbal of the Surging Soul",
+      "image_path": "res/commanders/HakbalOfTheSurgingSoul.png",
+      "text_path": "res/commanders/commander_text/commander_text.txt",
+      "total_wins": 0,
+      "colors": [
+        "blue",
+        "green"
+      ],
+      "second_commander": {
+        "enabled": false,
+        "name": "",
+        "image_path": "",
+        "text_path": "",
+        "colors": []
+      }
+    },
+    "The Scarab God": {
+      "primary_name": "The Scarab God",
+      "image_path": "res/commanders/TheScarabGod.png",
+      "text_path": "res/commanders/commander_text/commander_text.txt",
+      "total_wins": 0,
+      "colors": [
+        "black",
+        "blue"
+      ],
+      "second_commander": {
+        "enabled": false,
+        "name": "",
+        "image_path": "",
+        "text_path": "",
+        "colors": []
+      }
+    },
+    "Ms. Bumbleflower": {
+      "primary_name": "Ms. Bumbleflower",
+      "image_path": "res/commanders/MsBumbleFlower.png",
+      "text_path": "res/commanders/commander_text/commander_text.txt",
+      "total_wins": 0,
+      "colors": [
+        "blue",
+        "green",
+        "white"
+      ],
+      "second_commander": {
+        "enabled": false,
+        "name": "",
+        "image_path": "",
+        "text_path": "",
+        "colors": []
+      }
+    },
+    "Ganax, Astral Hunter": {
+      "primary_name": "Ganax, Astral Hunter",
+      "image_path": "res/commanders/GanaxAstralHunter.png",
+      "text_path": "res/commanders/commander_text/commander_text.txt",
+      "total_wins": 0,
+      "colors": [
+        "red"
+      ],
+      "second_commander": {
+        "enabled": false,
+        "name": "",
+        "image_path": "",
+        "text_path": "",
+        "colors": []
+      }
+    },
+    "Livaan, Cultist of Tiamat": {
+      "primary_name": "Livaan, Cultist of Tiamat",
+      "image_path": "res/commanders/LivaanCultistOfTiamat.png",
+      "text_path": "res/commanders/commander_text/commander_text.txt",
+      "total_wins": 0,
+      "colors": [
+        "red"
+      ],
+      "second_commander": {
+        "enabled": false,
+        "name": "",
+        "image_path": "",
+        "text_path": "",
+        "colors": []
+      }
+    },
+    "AminatouVeilPiercer": {
+      "primary_name": "AminatouVeilPiercer",
+      "image_path": "res/commanders/AminatouVeilPiercer.png",
+      "text_path": "res/commanders/commander_text/commander_text.txt",
+      "total_wins": 0,
+      "colors": [
+        "black",
+        "blue",
+        "white"
+      ],
+      "second_commander": {
+        "enabled": false,
+        "name": "",
+        "image_path": "",
+        "text_path": "",
+        "colors": []
+      }
+    },
+    "Caeser, Legion's Emperor": {
+      "primary_name": "Caeser, Legion's Emperor",
+      "image_path": "res/commanders/CaeserLegionsEmperor.png",
+      "text_path": "res/commanders/commander_text/commander_text.txt",
+      "total_wins": 0,
+      "colors": [
+        "black",
+        "red",
+        "white"
+      ],
+      "second_commander": {
+        "enabled": false,
+        "name": "",
+        "image_path": "",
+        "text_path": "",
+        "colors": []
+      }
+    },
+    "Chatterfang, Squirrel General": {
+      "primary_name": "Chatterfang, Squirrel General",
+      "image_path": "res/commanders/ChatterfangSquirrelGeneral.png",
+      "text_path": "res/commanders/commander_text/commander_text.txt",
+      "total_wins": 0,
+      "colors": [
+        "green"
+      ],
+      "second_commander": {
+        "enabled": false,
+        "name": "",
+        "image_path": "",
+        "text_path": "",
+        "colors": []
+      }
+    },
+    "Chulane , Teller of Tales": {
+      "primary_name": "Chulane , Teller of Tales",
+      "image_path": "res/commanders/ChulaneTellerOfTales.png",
+      "text_path": "res/commanders/commander_text/commander_text.txt",
+      "total_wins": 0,
+      "colors": [
+        "blue",
+        "green",
+        "white"
+      ],
+      "second_commander": {
+        "enabled": false,
+        "name": "",
+        "image_path": "",
+        "text_path": "",
+        "colors": []
+      }
+    },
+    "Fynn, the Fangbearer": {
+      "primary_name": "Fynn, the Fangbearer",
+      "image_path": "res/commanders/FynnTheFangbearer.png",
+      "text_path": "res/commanders/commander_text/commander_text.txt",
+      "total_wins": 0,
+      "colors": [
+        "green"
+      ],
+      "second_commander": {
+        "enabled": false,
+        "name": "",
+        "image_path": "",
+        "text_path": "",
+        "colors": []
+      }
+    },
+    "Kotis, the Fangkeeper": {
+      "primary_name": "Kotis, the Fangkeeper",
+      "image_path": "res/commanders/KotisTheFangkeeper.png",
+      "text_path": "res/commanders/commander_text/commander_text.txt",
+      "total_wins": 0,
+      "colors": [
+        "black",
+        "blue",
+        "green"
+      ],
+      "second_commander": {
+        "enabled": false,
+        "name": "",
+        "image_path": "",
+        "text_path": "",
+        "colors": []
+      }
+    },
+    "Leonardo, the Balance": {
+      "primary_name": "Leonardo, the Balance",
+      "image_path": "res/commanders/LeonardoTheBalance.png",
+      "text_path": "res/commanders/commander_text/commander_text.txt",
+      "total_wins": 0,
+      "colors": [
+        "black",
+        "blue",
+        "green",
+        "red",
+        "white"
+      ],
+      "second_commander": {
+        "enabled": false,
+        "name": "",
+        "image_path": "",
+        "text_path": "",
+        "colors": []
+      }
+    },
+    "Maralen, Fae Ascendant": {
+      "primary_name": "Maralen, Fae Ascendant",
+      "image_path": "res/commanders/MaralenFaeAscendant.png",
+      "text_path": "res/commanders/commander_text/commander_text.txt",
+      "total_wins": 0,
+      "colors": [
+        "black",
+        "blue",
+        "green"
+      ],
+      "second_commander": {
+        "enabled": false,
+        "name": "",
+        "image_path": "",
+        "text_path": "",
+        "colors": []
+      }
+    },
+    "Michelangelo, the Heart": {
+      "primary_name": "Michelangelo, the Heart",
+      "image_path": "res/commanders/MichelangeloTheHeart.png",
+      "text_path": "res/commanders/commander_text/commander_text.txt",
+      "total_wins": 0,
+      "colors": [
+        "green"
+      ],
+      "second_commander": {
+        "enabled": false,
+        "name": "",
+        "image_path": "",
+        "text_path": "",
+        "colors": []
+      }
+    },
+    "Obeka, Splitter of Seconds": {
+      "primary_name": "Obeka, Splitter of Seconds",
+      "image_path": "res/commanders/ObekaSplitterOfSeconds.png",
+      "text_path": "res/commanders/commander_text/commander_text.txt",
+      "total_wins": 0,
+      "colors": [
+        "black",
+        "blue",
+        "red"
+      ],
+      "second_commander": {
+        "enabled": false,
+        "name": "",
+        "image_path": "",
+        "text_path": "",
+        "colors": []
+      }
+    },
+    "Ramos, Dragon Engine": {
+      "primary_name": "Ramos, Dragon Engine",
+      "image_path": "res/commanders/RamosDragonEngine.png",
+      "text_path": "res/commanders/commander_text/commander_text.txt",
+      "total_wins": 0,
+      "colors": [
+        "black",
+        "blue",
+        "green",
+        "red",
+        "white"
+      ],
+      "second_commander": {
+        "enabled": false,
+        "name": "",
+        "image_path": "",
+        "text_path": "",
+        "colors": []
+      }
+    },
+    "Sam, Loyal Attendant": {
+      "primary_name": "Sam, Loyal Attendant",
+      "image_path": "res/commanders/SamLoyalAttendent.png",
+      "text_path": "res/commanders/commander_text/commander_text.txt",
+      "total_wins": 0,
+      "colors": [
+        "green",
+        "white"
+      ],
+      "second_commander": {
+        "enabled": false,
+        "name": "",
+        "image_path": "",
+        "text_path": "",
+        "colors": []
+      }
+    },
+    "Shiko and Narset, Unified": {
+      "primary_name": "Shiko and Narset, Unified",
+      "image_path": "res/commanders/ShikoAndNarsetUnified.png",
+      "text_path": "res/commanders/commander_text/commander_text.txt",
+      "total_wins": 0,
+      "colors": [
+        "blue",
+        "red",
+        "white"
+      ],
+      "second_commander": {
+        "enabled": false,
+        "name": "",
+        "image_path": "",
+        "text_path": "",
+        "colors": []
+      }
+    },
+    "Tifa, Martial Artist": {
+      "primary_name": "Tifa, Martial Artist",
+      "image_path": "res/commanders/TifaMartialArtist.png",
+      "text_path": "res/commanders/commander_text/commander_text.txt",
+      "total_wins": 0,
+      "colors": [
+        "green",
+        "red",
+        "white"
+      ],
+      "second_commander": {
+        "enabled": false,
+        "name": "",
+        "image_path": "",
+        "text_path": "",
+        "colors": []
+      }
+    },
+    "Urza, Lord Protector": {
+      "primary_name": "Urza, Lord Protector",
+      "image_path": "res/commanders/UrzaLordProtector.png",
+      "text_path": "res/commanders/commander_text/commander_text.txt",
+      "total_wins": 0,
+      "colors": [
+        "blue",
+        "white"
+      ],
+      "second_commander": {
+        "enabled": false,
+        "name": "",
+        "image_path": "",
+        "text_path": "",
+        "colors": []
+      }
+    },
+    "Volo, Guide to Monsters": {
+      "primary_name": "Volo, Guide to Monsters",
+      "image_path": "res/commanders/VoloGuideToMonsters.png",
+      "text_path": "res/commanders/commander_text/commander_text.txt",
+      "total_wins": 0,
+      "colors": [
+        "blue",
+        "green"
+      ],
+      "second_commander": {
+        "enabled": false,
+        "name": "",
+        "image_path": "",
+        "text_path": "",
+        "colors": []
+      }
+    },
+    "Leonardo, the Balance / Michelangelo, the Heart": {
+      "primary_name": "Leonardo, the Balance",
+      "image_path": "res/commanders/LeonardoTheBalance.png",
+      "text_path": "res/commanders/commander_text/commander_text.txt",
+      "total_wins": 0,
+      "colors": [
+        "black",
+        "blue",
+        "green",
+        "red",
+        "white"
+      ],
+      "second_commander": {
+        "enabled": true,
+        "name": "Michelangelo, the Heart",
+        "image_path": "res/commanders/MichelangeloTheHeart.png",
+        "text_path": "res/commanders/commander_text/commander_text.txt",
+        "colors": [
+          "green"
+        ]
+      }
+    },
+    "Lae'zel, Vlaakith's Champion / Master Chef": {
+      "primary_name": "Lae'zel, Vlaakith's Champion",
+      "image_path": "res/commanders/LaezelVlaakithsChampion.png",
+      "text_path": "res/commanders/commander_text/commander_text.txt",
+      "total_wins": 0,
+      "colors": [
+        "white"
+      ],
+      "second_commander": {
+        "enabled": true,
+        "name": "Master Chef",
+        "image_path": "res/commanders/MasterChef.png",
+        "text_path": "res/commanders/commander_text/commander_text.txt",
+        "colors": [
+          "green"
+        ]
+      }
+    },
+    "Lae'zel, Vlaakith's Champion": {
+      "primary_name": "Lae'zel, Vlaakith's Champion",
+      "image_path": "res/commanders/LaezelVlaakithsChampion.png",
+      "text_path": "res/commanders/commander_text/commander_text.txt",
+      "total_wins": 0,
+      "colors": [
+        "white"
+      ],
+      "second_commander": {
+        "enabled": false,
+        "name": "",
+        "image_path": "",
+        "text_path": "",
+        "colors": []
+      }
+    },
+    "Sword Coast Sailor": {
+      "primary_name": "Sword Coast Sailor",
+      "image_path": "res/commanders/SwordCoastSailor.png",
+      "text_path": "res/commanders/commander_text/commander_text.txt",
+      "total_wins": 0,
+      "colors": [
+        "blue"
+      ],
+      "second_commander": {
+        "enabled": false,
+        "name": "",
+        "image_path": "",
+        "text_path": "",
+        "colors": []
+      }
+    },
+    "Livaan, Cultist of Tiamat / Sword Coast Sailor": {
+      "primary_name": "Livaan, Cultist of Tiamat",
+      "image_path": "res/commanders/LivaanCultistOfTiamat.png",
+      "text_path": "res/commanders/commander_text/commander_text.txt",
+      "total_wins": 0,
+      "colors": [
+        "red"
+      ],
+      "second_commander": {
+        "enabled": true,
+        "name": "Sword Coast Sailor",
+        "image_path": "res/commanders/SwordCoastSailor.png",
+        "text_path": "res/commanders/commander_text/commander_text.txt",
+        "colors": [
+          "blue"
+        ]
+      }
+    },
+    "Agent of the Iron Throne": {
+      "primary_name": "Agent of the Iron Throne",
+      "image_path": "res/commanders/AgentOfTheIronThrone.png",
+      "text_path": "res/commanders/commander_text/commander_text.txt",
+      "total_wins": 0,
+      "colors": [
+        "black"
+      ],
+      "second_commander": {
+        "enabled": false,
+        "name": "",
+        "image_path": "",
+        "text_path": "",
+        "colors": []
+      }
+    },
+    "Ganax, Astral Hunter / Agent of the Iron Throne": {
+      "primary_name": "Ganax, Astral Hunter",
+      "image_path": "res/commanders/GanaxAstralHunter.png",
+      "text_path": "res/commanders/commander_text/commander_text.txt",
+      "total_wins": 0,
+      "colors": [
+        "red"
+      ],
+      "second_commander": {
+        "enabled": true,
+        "name": "Agent of the Iron Throne",
+        "image_path": "res/commanders/AgentOfTheIronThrone.png",
+        "text_path": "res/commanders/commander_text/commander_text.txt",
+        "colors": [
+          "black"
+        ]
+      }
+    },
+    "Aminatou, Veil Piercer": {
+      "primary_name": "Aminatou, Veil Piercer",
+      "image_path": "res/commanders/AminatouVeilPiercer.png",
+      "text_path": "res/commanders/commander_text/commander_text.txt",
+      "total_wins": 0,
+      "colors": [
+        "black",
+        "blue",
+        "white"
+      ],
+      "second_commander": {
+        "enabled": false,
+        "name": "",
+        "image_path": "",
+        "text_path": "",
+        "colors": []
+      }
+    }
+  },
+  "last_commander_profile_name": "Aminatou, Veil Piercer",
+  "player_setup": {
+    "player_names": [
+      "Merna",
+      "Sharpie",
+      "Strobel"
+    ],
+    "commander_names": [
+      "Aragorn, King of Gondor",
+      "Morska, Undersea Sleuth",
+      "Shiko and Narset, Unified"
+    ]
+  }
+}
