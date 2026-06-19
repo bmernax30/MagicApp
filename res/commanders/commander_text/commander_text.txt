@@ -64,6 +64,10 @@ Whenever you cast a creature spell, draw a card, then you may put a land card fr
 At the beginning of your end step, if a creature died under your control this turn, create a 1/1 white Human Soldier creature token.
 2, Sacrifice another creature: Each opponent loses 1 life and you gain 1 life.
 
+[Dina, Essence Brewer]
+Whenever you sacrifice a creature, draw a card. This ability triggers only once each turn.
+2,Tap, Sacrifice another creature: You gain X life and put X +1/+1 counters on target creature you control, where X is the sacrificed creature's power.
+
 [Don Andres, the Renegade]
 Each creature you control but don't own gets +2/+2, has menace and deathtouch, and is a Pirate in addition to its other types.
 Whenever you cast a noncreature spell you don't own, create two tapped Treasure tokens.
@@ -76,6 +80,14 @@ Whenever a creature you control attacks or blocks, it gets +X/+X until end of tu
 Eluge's power and toughness are each equal to the number of Islands you control.
 Whenever Eluge enters or attacks, put a flood counter on target land. It's an Island in addition to its other types for as long as it has a flood counter on it.
 The first instant or sorcery spell you cast each turn costs  ({U} or 1) less to cast for each land you control with a flood counter on it.
+
+[Excava, the Risen Past]
+Flying, haste
+Whenever Excava attacks, return up to one target artifact, creature, or non-Aura enchantment card with mana value 3 or less from your graveyard to the battlefield with a finality counter on it. It's a 1/1 Spirit creature with flying in addition to its other types. (If a creature with a finality counter on it would die, exile it instead.)
+
+[Felothar, Dawn of the Abzan]
+Trample
+Whenever Felothar enters or attacks, you may sacrifice a nonland permanent. When you do, put a +1/+1 counter on each creature you control.
 
 [Fynn, the Fangbearer]
 Deathtouch (Any amount of damage this deals to a creature is enough to destroy it.)
@@ -103,6 +115,10 @@ Commander creatures you own have -Whenever an artifact or creature you control i
 [Garna, Bloodfist of Keld]
 Whenever another creature you control dies, draw a card if it was attacking. Otherwise, Garna deals 1 damage to each opponent.
 
+[Gorma, the Gullet]
+Whenever another creature you control dies, put a +1/+1 counter on Gorma.
+Nontoken creatures you control enter with an additional +1/+1 counter on them for each creature that died under your control this turn.
+
 [Hakbal of the Surging Soul]
 At the beginning of combat on your turn, each Merfolk creature you control explores. (Reveal the top card of your library. Put that card into your hand if it's a land. Otherwise, put a +1/+1 counter on the exploring creature, then put the card back or put it into your graveyard.)
 Whenever Hakbal attacks, you may put a land card from your hand onto the battlefield. If you don't, draw a card.
@@ -125,6 +141,10 @@ Other artifacts you control have hexproof and indestructible.
 
 [Kamiz, Obscura Oculus]
 Whenever you attack, target attacking creature can't be blocked this turn. It connives. Then choose another attacking creature with lesser power. That creature gains double strike until end of turn. (To have a creature connive, draw a card, then discard a card. If you discarded a nonland card, put a +1/+1 counter on that creature.)
+
+[Killian, Devisive Mentor]
+Whenever an enchantment you control enters, tap up to one target creature and goad it. (Until your next turn, that creature attacks each combat if able and attacks a player other than you if able.)
+Whenever one or more creatures that are enchanted by an Aura you control attack, draw a card.
 
 [King Darien XLVIII]
 Other creatures you control get +1/+1.
@@ -204,6 +224,12 @@ Whenever you draw your second card each turn, put two +1/+1 counters on Morska.
 Vigilance
 Whenever you cast a spell, target opponent draws a card. Put a +1/+1 counter on target creature. It gains flying until end of turn. If this is the second time this ability has resolved this turn, you draw two cards.
 
+[Muddle, the Ever-Changing]
+Whenever you cast an instant or sorcery spell, Muddle becomes a copy of up to one target nonlegendary creature you control until end of turn, except it has myriad. (Whenever it attacks, for each opponent other than defending player, you may create a token copy that's tapped and attacking that player or a planeswalker they control. Exile the tokens at end of combat.)
+
+[New Commander]
+
+
 [Niki, Light of Hope]
 When Niko enters, create two Shard tokens. (They're enchantments with "
 2, Sacrifice this token: Scry 1, then draw a card.")
@@ -212,6 +238,11 @@ When Niko enters, create two Shard tokens. (They're enchantments with "
 [Obeka, Splitter of Seconds]
 Menace
 Whenever Obeka deals combat damage to a player, you get that many additional upkeep steps after this phase.
+
+[Primo, the Unbounded]
+Trample
+Primo enters with twice X +1/+1 counters on it.
+Whenever one or more creatures you control with base power 0 deal combat damage to a player, create a 0/0 green and blue Fractal creature token. Put a number of +1/+1 counters on it equal to the damage dealt.
 
 [Quintorius, History Chaser]
 Whenever one or more cards leave your graveyard, create a 3/2 red and white Spirit creature token.
@@ -223,6 +254,9 @@ Quintorius, History Chaser can be your commander.
 Flying
 Whenever you cast a spell, put a +1/+1 counter on Ramos for each of that spell's colors.
 Remove five +1/+1 counters from Ramos: Add 2x{WUBRG} . Activate only once each turn.
+
+[Rootha, Mastering the Moment]
+At the beginning of combat on your turn, if you've cast an instant or sorcery spell this turn, create an X/X blue and red Elemental creature token with flying and haste, where X is the greatest mana value among instant and sorcery spells you've cast this turn.
 
 [Sam, Loyal Attendant]
 Partner with Frodo, Adventurous Hobbit (When this creature enters, target player may put Frodo into their hand from their library, then shuffle.)
@@ -238,6 +272,10 @@ Whenever a creature you control deals combat damage to a player, if that creatur
 Whenever you activate a ninjutsu ability, look at the top three cards of your library. Put one of them into your hand and the rest on the bottom of your library in any order. This ability triggers only once each turn.
 Each creature card in your hand has ninjutsu 
 2{U}{B}.
+
+[Scriv, the Obligator]
+Flying, deathtouch
+Whenever Scriv enters or attacks, create a white Aura enchantment token named Contract attached to target creature an opponent controls. The token has enchant creature and "Whenever enchanted creature attacks, it gets +2/+0 until end of turn if it's attacking one of your opponents. Otherwise, its controller loses 2 life."
 
 [Shiko and Narset, Unified]
 Flying, vigilance
@@ -290,6 +328,10 @@ Ward-Sacrifice a Food.
 Other creatures are Food artifacts in addition to their other types and have "
 2,Tap , Sacrifice this permanent: You gain 3 life."
 Whenever a Food is put into a graveyard from the battlefield, put two +1/+1 counters on Ygra.
+
+[Zimone, Infinite Analyst]
+The first spell you cast with X in its mana cost each turn costs 1 less to cast for each +1/+1 counter on Zimone.
+Whenever you cast your first spell with X in its mana cost each turn, put two +1/+1 counters on Zimone.
 
 [Zimone, Mystery Unraveler]
 Landfall - Whenever a land you control enters, manifest dread if this is the first time this ability has resolved this turn. Otherwise, you may turn a permanent you control face up. (To manifest dread, look at the top two cards of your library. Put one onto the battlefield face down as a 2/2 creature and the other into your graveyard. Turn it face up any time for its mana cost if it's a creature card.)

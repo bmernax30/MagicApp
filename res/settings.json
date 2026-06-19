@@ -26,7 +26,8 @@
       "Inspirit, Flagship Vessel",
       "Ganax, Astral Hunter / Agent of the Iron Throne",
       "Lae'zel, Vlaakith's Champion / Master Chef",
-      "Livaan, Cultist of Tiamat / Sword Coast Sailor"
+      "Livaan, Cultist of Tiamat / Sword Coast Sailor",
+      "Rootha, Mastering the Moment"
     ],
     "Merna": [
       "High Perfect Morcant",
@@ -40,7 +41,9 @@
       "Bumi, Unleashed",
       "Aragorn, King of Gondor",
       "Ashling, the Limitless",
-      "Kamiz, Obscura Oculus"
+      "Kamiz, Obscura Oculus",
+      "Zimone, Infinite Analyst",
+      "Felothar, Dawn of the Abzan"
     ],
     "Strobel": [
       "Quintorius, History Chaser",
@@ -55,7 +58,8 @@
       "Leonardo, the Balance / Michelangelo, the Heart",
       "Chulane , Teller of Tales",
       "AminatouVeilPiercer",
-      "Tifa, Martial Artist"
+      "Tifa, Martial Artist",
+      "Killian, Devisive Mentor"
     ],
     "Sharpie": [
       "Morska, Undersea Sleuth",
@@ -64,7 +68,9 @@
       "AminatouVeilPiercer",
       "Chatterfang, Squirrel General",
       "Fynn, the Fangbearer",
-      "Maralen, Fae Ascendant"
+      "Maralen, Fae Ascendant",
+      "Quintorius, History Chaser",
+      "New Commander"
     ],
     "Mike": [
       "Hakbal of the Surging Soul"
@@ -77,11 +83,12 @@
     ]
   },
   "player_profile_wins": {
-    "Strobel": 0,
-    "Sharpie": 0,
-    "Zach": 1
+    "Strobel": 1,
+    "Sharpie": 1,
+    "Zach": 1,
+    "Merna": 1
   },
-  "last_profile_name": "Zach",
+  "last_profile_name": "Merna",
   "commander_profiles": {
     "Amalia Benavides Aguirre": {
       "primary_name": "Amalia Benavides Aguirre",
@@ -104,7 +111,7 @@
       "primary_name": "Arabella, Abandoned Doll",
       "image_path": "res/commanders/ArabellaAbandonedDoll.png",
       "text_path": "res/commanders/commander_text/commander_text.txt",
-      "total_wins": 0,
+      "total_wins": 1,
       "colors": [
         "red",
         "white"
@@ -155,7 +162,7 @@
       "primary_name": "Samut, Vizier of Naktamun",
       "image_path": "res/commanders/SamutVizierOfNakamun.png",
       "text_path": "res/commanders/commander_text/commander_text.txt",
-      "total_wins": 1,
+      "total_wins": 0,
       "colors": [
         "green",
         "red"
@@ -398,7 +405,7 @@
       "primary_name": "Bilbo, Retired Burglar",
       "image_path": "res/commanders/BilboRetiredBurglar.png",
       "text_path": "res/commanders/commander_text/commander_text.txt",
-      "total_wins": 1,
+      "total_wins": 0,
       "colors": [
         "blue",
         "red"
@@ -590,7 +597,7 @@
       "primary_name": "Quintorius, History Chaser",
       "image_path": "res/commanders/QuintoriusHistoryChaser.png",
       "text_path": "res/commanders/commander_text/commander_text.txt",
-      "total_wins": 0,
+      "total_wins": 1,
       "colors": [
         "red",
         "white"
@@ -1128,21 +1135,206 @@
         "text_path": "",
         "colors": []
       }
+    },
+    "Dina, Essence Brewer": {
+      "primary_name": "Dina, Essence Brewer",
+      "image_path": "res/commanders/DinaEssenceBrewer.png",
+      "text_path": "res/commanders/commander_text/commander_text.txt",
+      "total_wins": 0,
+      "colors": [
+        "black",
+        "green"
+      ],
+      "second_commander": {
+        "enabled": false,
+        "name": "",
+        "image_path": "",
+        "text_path": "",
+        "colors": []
+      }
+    },
+    "Excava, the Risen Past": {
+      "primary_name": "Excava, the Risen Past",
+      "image_path": "res/commanders/ExcavaTheRisenPast.png",
+      "text_path": "res/commanders/commander_text/commander_text.txt",
+      "total_wins": 0,
+      "colors": [
+        "red",
+        "white"
+      ],
+      "second_commander": {
+        "enabled": false,
+        "name": "",
+        "image_path": "",
+        "text_path": "",
+        "colors": []
+      }
+    },
+    "Felothar, Dawn of the Abzan": {
+      "primary_name": "Felothar, Dawn of the Abzan",
+      "image_path": "res/commanders/FelotharDawnOfAbzan.png",
+      "text_path": "res/commanders/commander_text/commander_text.txt",
+      "total_wins": 1,
+      "colors": [
+        "black",
+        "green",
+        "white"
+      ],
+      "second_commander": {
+        "enabled": false,
+        "name": "",
+        "image_path": "",
+        "text_path": "",
+        "colors": []
+      }
+    },
+    "Gorma, the Gullet": {
+      "primary_name": "Gorma, the Gullet",
+      "image_path": "res/commanders/GormaTheGullet.png",
+      "text_path": "res/commanders/commander_text/commander_text.txt",
+      "total_wins": 0,
+      "colors": [
+        "black",
+        "green"
+      ],
+      "second_commander": {
+        "enabled": false,
+        "name": "",
+        "image_path": "",
+        "text_path": "",
+        "colors": []
+      }
+    },
+    "Killian, Devisive Mentor": {
+      "primary_name": "Killian, Devisive Mentor",
+      "image_path": "res/commanders/KillianDecisiveMentor.png",
+      "text_path": "res/commanders/commander_text/commander_text.txt",
+      "total_wins": 1,
+      "colors": [
+        "black",
+        "white"
+      ],
+      "second_commander": {
+        "enabled": false,
+        "name": "",
+        "image_path": "",
+        "text_path": "",
+        "colors": []
+      }
+    },
+    "Muddle, the Ever-Changing": {
+      "primary_name": "Muddle, the Ever-Changing",
+      "image_path": "res/commanders/MuddleTheEverChanging.png",
+      "text_path": "res/commanders/commander_text/commander_text.txt",
+      "total_wins": 0,
+      "colors": [
+        "blue",
+        "red"
+      ],
+      "second_commander": {
+        "enabled": false,
+        "name": "",
+        "image_path": "",
+        "text_path": "",
+        "colors": []
+      }
+    },
+    "Primo, the Unbounded": {
+      "primary_name": "Primo, the Unbounded",
+      "image_path": "res/commanders/PrimoTheUnbound.png",
+      "text_path": "res/commanders/commander_text/commander_text.txt",
+      "total_wins": 0,
+      "colors": [
+        "blue",
+        "green"
+      ],
+      "second_commander": {
+        "enabled": false,
+        "name": "",
+        "image_path": "",
+        "text_path": "",
+        "colors": []
+      }
+    },
+    "Rootha, Mastering the Moment": {
+      "primary_name": "Rootha, Mastering the Moment",
+      "image_path": "res/commanders/RoothaMasteringTheMoment.png",
+      "text_path": "res/commanders/commander_text/commander_text.txt",
+      "total_wins": 0,
+      "colors": [
+        "blue",
+        "red"
+      ],
+      "second_commander": {
+        "enabled": false,
+        "name": "",
+        "image_path": "",
+        "text_path": "",
+        "colors": []
+      }
+    },
+    "Scriv, the Obligator": {
+      "primary_name": "Scriv, the Obligator",
+      "image_path": "res/commanders/ScrivTheObligator.png",
+      "text_path": "res/commanders/commander_text/commander_text.txt",
+      "total_wins": 0,
+      "colors": [
+        "black",
+        "white"
+      ],
+      "second_commander": {
+        "enabled": false,
+        "name": "",
+        "image_path": "",
+        "text_path": "",
+        "colors": []
+      }
+    },
+    "Zimone, Infinite Analyst": {
+      "primary_name": "Zimone, Infinite Analyst",
+      "image_path": "res/commanders/ZimonInfiniteAnalyst.png",
+      "text_path": "res/commanders/commander_text/commander_text.txt",
+      "total_wins": 0,
+      "colors": [
+        "blue",
+        "green"
+      ],
+      "second_commander": {
+        "enabled": false,
+        "name": "",
+        "image_path": "",
+        "text_path": "",
+        "colors": []
+      }
+    },
+    "New Commander": {
+      "primary_name": "New Commander",
+      "image_path": "",
+      "text_path": "res/commanders/commander_text/commander_text.txt",
+      "total_wins": 0,
+      "colors": [],
+      "second_commander": {
+        "enabled": false,
+        "name": "",
+        "image_path": "",
+        "text_path": "",
+        "colors": []
+      }
     }
   },
-  "last_commander_profile_name": "Aminatou, Veil Piercer",
+  "last_commander_profile_name": "New Commander",
   "player_setup": {
     "player_names": [
       "Merna",
       "Sharpie",
       "Strobel",
-      "Mike"
+      "Zach"
     ],
     "commander_names": [
-      "Hearthhull, the Worldseed",
-      "Fynn, the Fangbearer",
-      "Chulane , Teller of Tales",
-      "Hakbal of the Surging Soul"
+      "Felothar, Dawn of the Abzan",
+      "Morska, Undersea Sleuth",
+      "Ramos, Dragon Engine",
+      "Auntie Ool, Cursewretch"
     ]
   }
 }

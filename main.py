@@ -137,6 +137,7 @@ class MagicApp(tk.Tk):
         self.game_winner_index = None
         self.game_win_recorded = False
         self.game_background_images = {}
+        self.hidden_commander_players = set()
         self.game_key_bindings = {
             "q": (0, 1),
             "a": (0, -1),
@@ -2509,6 +2510,7 @@ class MagicApp(tk.Tk):
         self.poison_mode_player = None
         self.game_winner_index = None
         self.game_win_recorded = False
+        self.hidden_commander_players = set()
         if self.planechase_enabled.get() and self.planes:
             self.plane_history = [random.choice(self.planes)]
             self.current_plane_history_index = 0
@@ -2595,6 +2597,7 @@ class MagicApp(tk.Tk):
                 "<Configure>",
                 lambda event,
                 canvas=box,
+                player_index=index,
                 commander_name=commander_name,
                 text_items=(
                     player_text,
@@ -2605,6 +2608,26 @@ class MagicApp(tk.Tk):
                 ): self._draw_game_box(
                     event,
                     canvas,
+                    player_index,
+                    commander_name,
+                    text_items,
+                ),
+            )
+            box.bind(
+                "<Button-1>",
+                lambda event,
+                canvas=box,
+                player_index=index,
+                commander_name=commander_name,
+                text_items=(
+                    player_text,
+                    commander_profile_text,
+                    life_text,
+                    wins_text,
+                    commander_damage_text,
+                ): self._toggle_commander_visibility(
+                    canvas,
+                    player_index,
                     commander_name,
                     text_items,
                 ),
@@ -2773,10 +2796,35 @@ class MagicApp(tk.Tk):
             height = self.winfo_screenheight()
             self.geometry(f"{width}x{height}+0+0")
 
-    def _draw_game_box(self, event, canvas, commander_name, text_items):
-        width = max(1, event.width)
-        height = max(1, event.height)
-        background = self._game_box_background(commander_name, width, height)
+    def _toggle_commander_visibility(
+        self,
+        canvas,
+        player_index,
+        commander_name,
+        text_items,
+    ):
+        if player_index in self.hidden_commander_players:
+            self.hidden_commander_players.remove(player_index)
+        else:
+            self.hidden_commander_players.add(player_index)
+
+        self._draw_game_box(
+            None,
+            canvas,
+            player_index,
+            commander_name,
+            text_items,
+        )
+
+    def _draw_game_box(self, event, canvas, player_index, commander_name, text_items):
+        width = max(1, event.width if event is not None else canvas.winfo_width())
+        height = max(1, event.height if event is not None else canvas.winfo_height())
+        commander_hidden = player_index in self.hidden_commander_players
+        background = (
+            None
+            if commander_hidden
+            else self._game_box_background(commander_name, width, height)
+        )
 
         canvas.delete("background")
         if background is not None:
@@ -2786,7 +2834,8 @@ class MagicApp(tk.Tk):
             canvas.config(bg="#000000")
 
         canvas.delete("commander_text_box")
-        self._draw_commander_text_boxes(canvas, commander_name, width, height)
+        if not commander_hidden:
+            self._draw_commander_text_boxes(canvas, commander_name, width, height)
 
         (
             player_text,
@@ -2795,8 +2844,13 @@ class MagicApp(tk.Tk):
             wins_text,
             commander_damage_text,
         ) = text_items
+        canvas.itemconfig(
+            commander_profile_text,
+            text="Unknow Commander" if commander_hidden else commander_name,
+        )
         self._resize_game_box_text(
-            event,
+            width,
+            height,
             canvas,
             player_text,
             commander_profile_text,
@@ -2984,7 +3038,8 @@ class MagicApp(tk.Tk):
 
     def _resize_game_box_text(
         self,
-        event,
+        width,
+        height,
         canvas,
         player_text,
         commander_profile_text,
@@ -2992,16 +3047,16 @@ class MagicApp(tk.Tk):
         wins_text,
         commander_damage_text,
     ):
-        shortest_side = max(1, min(event.width, event.height))
+        shortest_side = max(1, min(width, height))
         player_size = max(14, shortest_side // 12)
         life_size = max(34, shortest_side // 4)
         commander_size = max(10, shortest_side // 20)
 
-        canvas.coords(player_text, event.width // 2, event.height * 0.13)
-        canvas.coords(commander_profile_text, event.width // 2, event.height * 0.22)
-        canvas.coords(life_text, event.width // 2, event.height * 0.47)
+        canvas.coords(player_text, width // 2, height * 0.13)
+        canvas.coords(commander_profile_text, width // 2, height * 0.22)
+        canvas.coords(life_text, width // 2, height * 0.47)
         canvas.coords(wins_text, 12, 12)
-        canvas.coords(commander_damage_text, event.width - 12, 12)
+        canvas.coords(commander_damage_text, width - 12, 12)
         canvas.itemconfig(player_text, font=("Arial", player_size, "bold"))
         canvas.itemconfig(commander_profile_text, font=("Arial", commander_size, "bold"))
         canvas.itemconfig(life_text, font=("Arial", life_size, "bold"))
