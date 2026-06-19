@@ -122,6 +122,9 @@ class MagicApp(tk.Tk):
         self.commander_names = []
         self.life_totals = []
         self.game_life_text_items = []
+        self.game_pending_change_items = []
+        self.pending_counter_changes = {}
+        self.pending_counter_timers = {}
         self.commander_damage_totals = []
         self.commander_damage_mode_player = None
         self.commander_damage_summary_items = []
@@ -2455,6 +2458,7 @@ class MagicApp(tk.Tk):
 
     def _clear_window(self):
         self._unbind_game_keys()
+        self._cancel_pending_counter_changes()
         for widget in self.winfo_children():
             widget.destroy()
 
@@ -2499,6 +2503,9 @@ class MagicApp(tk.Tk):
         self._ensure_player_fields()
         self.life_totals = [tk.IntVar(value=life_total) for _ in range(player_count)]
         self.game_life_text_items = []
+        self.game_pending_change_items = []
+        self.pending_counter_changes = {}
+        self.pending_counter_timers = {}
         self.commander_damage_totals = [
             [0 for _ in range(player_count)]
             for _ in range(player_count)
@@ -2557,6 +2564,50 @@ class MagicApp(tk.Tk):
                 font=("Arial", 30, "bold"),
             )
             self.game_life_text_items.append((box, life_text))
+
+            pending_increase_box = box.create_rectangle(
+                0,
+                0,
+                0,
+                0,
+                fill="#111827",
+                outline="#86efac",
+                width=2,
+                state="hidden",
+            )
+            pending_increase_text = box.create_text(
+                0,
+                0,
+                text="",
+                fill="#86efac",
+                font=("Arial", 11, "bold"),
+            )
+            pending_decrease_box = box.create_rectangle(
+                0,
+                0,
+                0,
+                0,
+                fill="#111827",
+                outline="#fca5a5",
+                width=2,
+                state="hidden",
+            )
+            pending_decrease_text = box.create_text(
+                0,
+                0,
+                text="",
+                fill="#fca5a5",
+                font=("Arial", 11, "bold"),
+            )
+            self.game_pending_change_items.append(
+                (
+                    box,
+                    pending_increase_box,
+                    pending_increase_text,
+                    pending_decrease_box,
+                    pending_decrease_text,
+                )
+            )
             self.life_totals[index].trace_add(
                 "write",
                 lambda *args: self._update_game_life_states(),
@@ -2600,6 +2651,10 @@ class MagicApp(tk.Tk):
                     player_text,
                     commander_profile_text,
                     life_text,
+                    pending_increase_box,
+                    pending_increase_text,
+                    pending_decrease_box,
+                    pending_decrease_text,
                     wins_text,
                     commander_damage_text,
                 ): self._draw_game_box(
@@ -2792,6 +2847,10 @@ class MagicApp(tk.Tk):
             player_text,
             commander_profile_text,
             life_text,
+            pending_increase_box,
+            pending_increase_text,
+            pending_decrease_box,
+            pending_decrease_text,
             wins_text,
             commander_damage_text,
         ) = text_items
@@ -2801,6 +2860,10 @@ class MagicApp(tk.Tk):
             player_text,
             commander_profile_text,
             life_text,
+            pending_increase_box,
+            pending_increase_text,
+            pending_decrease_box,
+            pending_decrease_text,
             wins_text,
             commander_damage_text,
         )
@@ -2989,6 +3052,10 @@ class MagicApp(tk.Tk):
         player_text,
         commander_profile_text,
         life_text,
+        pending_increase_box,
+        pending_increase_text,
+        pending_decrease_box,
+        pending_decrease_text,
         wins_text,
         commander_damage_text,
     ):
@@ -3000,11 +3067,32 @@ class MagicApp(tk.Tk):
         canvas.coords(player_text, event.width // 2, event.height * 0.13)
         canvas.coords(commander_profile_text, event.width // 2, event.height * 0.22)
         canvas.coords(life_text, event.width // 2, event.height * 0.47)
+        canvas.coords(pending_increase_text, event.width // 2, event.height * 0.315)
+        canvas.coords(pending_decrease_text, event.width // 2, event.height * 0.625)
         canvas.coords(wins_text, 12, 12)
         canvas.coords(commander_damage_text, event.width - 12, 12)
         canvas.itemconfig(player_text, font=("Arial", player_size, "bold"))
         canvas.itemconfig(commander_profile_text, font=("Arial", commander_size, "bold"))
         canvas.itemconfig(life_text, font=("Arial", life_size, "bold"))
+        pending_size = max(9, min(14, shortest_side // 22))
+        canvas.itemconfig(
+            pending_increase_text,
+            font=("Arial", pending_size, "bold"),
+        )
+        canvas.itemconfig(
+            pending_decrease_text,
+            font=("Arial", pending_size, "bold"),
+        )
+        self._resize_pending_change_box(
+            canvas,
+            pending_increase_box,
+            pending_increase_text,
+        )
+        self._resize_pending_change_box(
+            canvas,
+            pending_decrease_box,
+            pending_decrease_text,
+        )
         canvas.itemconfig(wins_text, font=("Arial", commander_size, "bold"))
         canvas.itemconfig(
             commander_damage_text,
@@ -3013,13 +3101,142 @@ class MagicApp(tk.Tk):
         canvas.tag_raise(player_text)
         canvas.tag_raise(commander_profile_text)
         canvas.tag_raise(life_text)
+        canvas.tag_raise(pending_increase_box)
+        canvas.tag_raise(pending_increase_text)
+        canvas.tag_raise(pending_decrease_box)
+        canvas.tag_raise(pending_decrease_text)
         canvas.tag_raise(wins_text)
         canvas.tag_raise(commander_damage_text)
 
     def _adjust_life_total(self, player_index, amount):
         if 0 <= player_index < len(self.life_totals):
-            current_life = self.life_totals[player_index].get()
-            self.life_totals[player_index].set(max(0, current_life + amount))
+            self._queue_counter_change(("life", player_index), amount)
+
+    def _counter_value(self, counter_key):
+        counter_type = counter_key[0]
+        if counter_type == "life":
+            return self.life_totals[counter_key[1]].get()
+        if counter_type == "poison":
+            return self.poison_counters[counter_key[1]]
+        if counter_type == "commander":
+            return self.commander_damage_totals[counter_key[1]][counter_key[2]]
+        return 0
+
+    def _queue_counter_change(self, counter_key, amount):
+        current_value = self._counter_value(counter_key)
+        pending_amount = self.pending_counter_changes.get(counter_key, 0)
+        new_pending_amount = max(-current_value, pending_amount + amount)
+
+        timer = self.pending_counter_timers.pop(counter_key, None)
+        if timer is not None:
+            self.after_cancel(timer)
+
+        if new_pending_amount == 0:
+            self.pending_counter_changes.pop(counter_key, None)
+        else:
+            self.pending_counter_changes[counter_key] = new_pending_amount
+            self.pending_counter_timers[counter_key] = self.after(
+                2000,
+                lambda key=counter_key: self._commit_counter_change(key),
+            )
+        self._update_game_life_states()
+
+    def _commit_counter_change(self, counter_key):
+        self.pending_counter_timers.pop(counter_key, None)
+        amount = self.pending_counter_changes.pop(counter_key, 0)
+        if not amount:
+            self._update_game_life_states()
+            return
+
+        counter_type = counter_key[0]
+        if counter_type == "life":
+            player_index = counter_key[1]
+            self.life_totals[player_index].set(
+                max(0, self.life_totals[player_index].get() + amount)
+            )
+        elif counter_type == "poison":
+            player_index = counter_key[1]
+            self.poison_counters[player_index] = max(
+                0,
+                self.poison_counters[player_index] + amount,
+            )
+        elif counter_type == "commander":
+            target_player_index, source_player_index = counter_key[1:]
+            self.commander_damage_totals[target_player_index][
+                source_player_index
+            ] = max(
+                0,
+                self.commander_damage_totals[target_player_index][
+                    source_player_index
+                ] + amount,
+            )
+        self._update_game_life_states()
+
+    def _cancel_pending_counter_changes(self):
+        for timer in self.pending_counter_timers.values():
+            try:
+                self.after_cancel(timer)
+            except tk.TclError:
+                pass
+        self.pending_counter_timers = {}
+        self.pending_counter_changes = {}
+
+    def _displayed_counter_key(self, player_index):
+        if self.commander_damage_mode_player is not None:
+            if player_index == self.commander_damage_mode_player:
+                return None
+            return (
+                "commander",
+                self.commander_damage_mode_player,
+                player_index,
+            )
+        if self.poison_mode_player == player_index:
+            return ("poison", player_index)
+        return ("life", player_index)
+
+    def _resize_pending_change_box(self, canvas, box_item, text_item):
+        text = canvas.itemcget(text_item, "text")
+        if not text:
+            canvas.itemconfig(box_item, state="hidden")
+            return
+
+        bounds = canvas.bbox(text_item)
+        if bounds is None:
+            canvas.itemconfig(box_item, state="hidden")
+            return
+
+        padding_x = 5
+        padding_y = 2
+        canvas.coords(
+            box_item,
+            bounds[0] - padding_x,
+            bounds[1] - padding_y,
+            bounds[2] + padding_x,
+            bounds[3] + padding_y,
+        )
+        canvas.itemconfig(box_item, state="normal")
+        canvas.tag_lower(box_item, text_item)
+
+    def _update_pending_change_displays(self):
+        for player_index, (
+            canvas,
+            increase_box,
+            increase_text,
+            decrease_box,
+            decrease_text,
+        ) in enumerate(self.game_pending_change_items):
+            counter_key = self._displayed_counter_key(player_index)
+            amount = self.pending_counter_changes.get(counter_key, 0)
+            canvas.itemconfig(
+                increase_text,
+                text=f"+{amount}" if amount > 0 else "",
+            )
+            canvas.itemconfig(
+                decrease_text,
+                text=str(amount) if amount < 0 else "",
+            )
+            self._resize_pending_change_box(canvas, increase_box, increase_text)
+            self._resize_pending_change_box(canvas, decrease_box, decrease_text)
 
     def _update_game_life_states(self):
         if not self.life_totals or not self.game_life_text_items:
@@ -3065,6 +3282,7 @@ class MagicApp(tk.Tk):
                     display_color = "#ffffff"
             canvas.itemconfig(life_text, text=display_text, fill=display_color)
 
+        self._update_pending_change_displays()
         self._update_commander_damage_summaries()
 
     def _has_lethal_commander_damage(self, player_index):
@@ -3120,14 +3338,10 @@ class MagicApp(tk.Tk):
         if source_player_index == target_player_index:
             return
 
-        current_damage = self.commander_damage_totals[target_player_index][
-            source_player_index
-        ]
-        self.commander_damage_totals[target_player_index][source_player_index] = max(
-            0,
-            current_damage + amount,
+        self._queue_counter_change(
+            ("commander", target_player_index, source_player_index),
+            amount,
         )
-        self._update_game_life_states()
 
     def _toggle_poison_mode(self, player_index):
         if not 0 <= player_index < len(self.life_totals):
@@ -3143,11 +3357,7 @@ class MagicApp(tk.Tk):
     def _adjust_poison_counter(self, player_index, amount):
         if player_index != self.poison_mode_player:
             return
-        self.poison_counters[player_index] = max(
-            0,
-            self.poison_counters[player_index] + amount,
-        )
-        self._update_game_life_states()
+        self._queue_counter_change(("poison", player_index), amount)
 
     def _record_game_winner(self):
         if self.game_win_recorded or self.game_winner_index is None:
