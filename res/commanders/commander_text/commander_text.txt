@@ -66,7 +66,7 @@ At the beginning of your end step, if a creature died under your control this tu
 
 [Dina, Essence Brewer]
 Whenever you sacrifice a creature, draw a card. This ability triggers only once each turn.
-2,Tap, Sacrifice another creature: You gain X life and put X +1/+1 counters on target creature you control, where X is the sacrificed creature's power.
+2,tap,Sacrifice another creature: You gain X life and put X +1+1 counters on target creature you control, where X is the sacrificed creature's power.
 
 [Don Andres, the Renegade]
 Each creature you control but don't own gets +2/+2, has menace and deathtouch, and is a Pirate in addition to its other types.
@@ -80,6 +80,10 @@ Whenever a creature you control attacks or blocks, it gets +X/+X until end of tu
 Eluge's power and toughness are each equal to the number of Islands you control.
 Whenever Eluge enters or attacks, put a flood counter on target land. It's an Island in addition to its other types for as long as it has a flood counter on it.
 The first instant or sorcery spell you cast each turn costs  ({U} or 1) less to cast for each land you control with a flood counter on it.
+
+[Eowyn Shieldmaiden]
+First Strike
+At the beginning of combat on your turn, if another Human entered the battlefield under your control this turn, create two 2/2 red Human Knight creature tokens with trample and hste. Then if you control six or more Humans, draw a card.
 
 [Excava, the Risen Past]
 Flying, haste

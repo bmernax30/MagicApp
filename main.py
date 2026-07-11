@@ -20,6 +20,7 @@ PLANES_CATALOG_FILE = PLANES_DIR / "planes.json"
 CREATE_NEW_PROFILE = "Create New Player Profile"
 CREATE_NEW_COMMANDER_PROFILE = "Create New Commander Profile"
 APP_VERSION = "1.0"
+MANA_COLORS = ["white", "blue", "red", "green", "black", "colorless"]
 
 
 def resolve_app_path(path_value):
@@ -76,6 +77,8 @@ class MagicApp(tk.Tk):
         self.commander_profile_name = tk.StringVar()
         self.primary_commander_name = ""
         self.commander_total_wins = tk.IntVar(value=0)
+        self.commander_attack_power = tk.IntVar(value=0)
+        self.commander_defense_power = tk.IntVar(value=0)
         self.commander_image_path = tk.StringVar()
         self.commander_image_filename = tk.StringVar()
         self.commander_text = tk.StringVar()
@@ -86,6 +89,8 @@ class MagicApp(tk.Tk):
         self.second_commander_image_filename = tk.StringVar()
         self.second_commander_text = tk.StringVar()
         self.second_commander_text_widget = None
+        self.second_commander_attack_power = tk.IntVar(value=0)
+        self.second_commander_defense_power = tk.IntVar(value=0)
         self.commander_profiles = {}
         self.commander_texts = {}
         self.last_commander_profile_name = ""
@@ -99,18 +104,20 @@ class MagicApp(tk.Tk):
         self.second_mana_icon_labels = {}
         self.commander_profile_status = tk.StringVar()
         self.commander_color_vars = {
-            "black": tk.BooleanVar(value=False),
-            "blue": tk.BooleanVar(value=False),
-            "green": tk.BooleanVar(value=False),
-            "red": tk.BooleanVar(value=False),
-            "white": tk.BooleanVar(value=False),
+            color_name: tk.BooleanVar(value=False)
+            for color_name in MANA_COLORS
         }
         self.second_commander_color_vars = {
-            "black": tk.BooleanVar(value=False),
-            "blue": tk.BooleanVar(value=False),
-            "green": tk.BooleanVar(value=False),
-            "red": tk.BooleanVar(value=False),
-            "white": tk.BooleanVar(value=False),
+            color_name: tk.BooleanVar(value=False)
+            for color_name in MANA_COLORS
+        }
+        self.commander_color_cost_vars = {
+            color_name: tk.IntVar(value=0)
+            for color_name in MANA_COLORS
+        }
+        self.second_commander_color_cost_vars = {
+            color_name: tk.IntVar(value=0)
+            for color_name in MANA_COLORS
         }
         self.player_setup_screen = None
         self.player_setup_panel_window = None
@@ -123,8 +130,10 @@ class MagicApp(tk.Tk):
         self.life_totals = []
         self.game_life_text_items = []
         self.game_pending_change_items = []
+        self.game_commander_damage_flash_items = []
         self.pending_counter_changes = {}
         self.pending_counter_timers = {}
+        self.commander_damage_flash_timers = {}
         self.commander_damage_totals = []
         self.commander_damage_mode_player = None
         self.commander_damage_summary_items = []
@@ -320,6 +329,16 @@ class MagicApp(tk.Tk):
                         0,
                         999999,
                     ),
+                    "attack_power": self._clamp_plain_number(
+                        profile.get("attack_power", 0),
+                        0,
+                        99,
+                    ),
+                    "defense_power": self._clamp_plain_number(
+                        profile.get("defense_power", 0),
+                        0,
+                        99,
+                    ),
                     "colors": [
                         str(color)
                         for color in colors
@@ -327,6 +346,7 @@ class MagicApp(tk.Tk):
                     ]
                     if isinstance(colors, list)
                     else [],
+                    "color_cost": self._clean_color_cost(profile.get("color_cost", {})),
                     "second_commander": second_commander,
                 }
 
@@ -475,7 +495,10 @@ class MagicApp(tk.Tk):
                         "image_path": "",
                         "text_path": "",
                         "total_wins": 0,
+                        "attack_power": 0,
+                        "defense_power": 0,
                         "colors": [],
+                        "color_cost": self._empty_color_cost(),
                     }
                     created_profile = True
 
@@ -491,6 +514,16 @@ class MagicApp(tk.Tk):
             "name": str(profile.get("name", "")),
             "image_path": str(profile.get("image_path", "")),
             "text_path": str(profile.get("text_path", "")),
+            "attack_power": self._clamp_plain_number(
+                profile.get("attack_power", 0),
+                0,
+                99,
+            ),
+            "defense_power": self._clamp_plain_number(
+                profile.get("defense_power", 0),
+                0,
+                99,
+            ),
             "colors": [
                 str(color)
                 for color in colors
@@ -498,6 +531,7 @@ class MagicApp(tk.Tk):
             ]
             if isinstance(colors, list)
             else [],
+            "color_cost": self._clean_color_cost(profile.get("color_cost", {})),
         }
 
     def _clamp_plain_number(self, value, minimum, maximum):
@@ -507,6 +541,22 @@ class MagicApp(tk.Tk):
             current_value = minimum
 
         return max(minimum, min(maximum, current_value))
+
+    def _empty_color_cost(self):
+        return {color_name: 0 for color_name in MANA_COLORS}
+
+    def _clean_color_cost(self, color_cost):
+        if not isinstance(color_cost, dict):
+            color_cost = {}
+
+        return {
+            color_name: self._clamp_plain_number(
+                color_cost.get(color_name, 0),
+                0,
+                99,
+            )
+            for color_name in MANA_COLORS
+        }
 
     def _quit_app(self):
         self._save_settings()
@@ -1129,6 +1179,30 @@ class MagicApp(tk.Tk):
         wins_input.pack(anchor="w")
         wins_input.bind("<KeyPress>", self._clear_commander_profile_status)
 
+        power_label = tk.Label(
+            panel,
+            text="Power / Toughness",
+            bg="#111827",
+            fg="#ffffff",
+            font=("Arial", 13, "bold"),
+        )
+        power_label.grid(row=5, column=0, sticky="w", padx=(0, 14), pady=8)
+
+        power_area = tk.Frame(panel, bg="#111827")
+        power_area.grid(row=5, column=1, columnspan=2, sticky="w", pady=8)
+        self._create_number_field(
+            power_area,
+            "Attack",
+            self.commander_attack_power,
+            column=0,
+        )
+        self._create_number_field(
+            power_area,
+            "Defense",
+            self.commander_defense_power,
+            column=1,
+        )
+
         color_label = tk.Label(
             panel,
             text="Colors",
@@ -1136,19 +1210,19 @@ class MagicApp(tk.Tk):
             fg="#ffffff",
             font=("Arial", 13, "bold"),
         )
-        color_label.grid(row=5, column=0, sticky="w", padx=(0, 14), pady=12)
+        color_label.grid(row=6, column=0, sticky="w", padx=(0, 14), pady=12)
 
         color_area = tk.Frame(panel, bg="#111827")
-        color_area.grid(row=5, column=1, columnspan=2, sticky="w", pady=12)
+        color_area.grid(row=6, column=1, columnspan=2, sticky="w", pady=12)
 
-        color_names = ["black", "blue", "green", "red", "white"]
-        for column, color_name in enumerate(color_names):
+        for column, color_name in enumerate(MANA_COLORS):
             self._create_mana_icon_selector(
                 color_area,
                 color_name,
                 column,
                 self.commander_color_vars,
                 self.mana_icon_labels,
+                self.commander_color_cost_vars,
             )
 
         text_label = tk.Label(
@@ -1158,7 +1232,7 @@ class MagicApp(tk.Tk):
             fg="#ffffff",
             font=("Arial", 13, "bold"),
         )
-        text_label.grid(row=6, column=0, sticky="w", padx=(0, 14), pady=8)
+        text_label.grid(row=7, column=0, sticky="w", padx=(0, 14), pady=8)
 
         commander_text_input = scrolledtext.ScrolledText(
             panel,
@@ -1169,7 +1243,7 @@ class MagicApp(tk.Tk):
         )
         commander_text_input.insert("1.0", self.commander_text.get())
         commander_text_input.grid(
-            row=6,
+            row=7,
             column=1,
             columnspan=2,
             sticky="ew",
@@ -1191,14 +1265,14 @@ class MagicApp(tk.Tk):
             font=("Arial", 13, "bold"),
         )
         second_toggle.grid(
-            row=7,
+            row=8,
             column=0,
             columnspan=6 if self.second_commander_enabled.get() else 3,
             sticky="w",
             pady=(12, 0),
         )
 
-        next_row = 8
+        next_row = 9
         if self.second_commander_enabled.get():
             self._build_second_commander_section(panel, start_row=1, start_column=3)
 
@@ -1428,6 +1502,42 @@ class MagicApp(tk.Tk):
         )
         self._update_second_commander_image_preview()
 
+        power_label = tk.Label(
+            panel,
+            text="2nd Power / Toughness",
+            bg="#111827",
+            fg="#ffffff",
+            font=("Arial", 13, "bold"),
+        )
+        power_label.grid(
+            row=start_row + 4,
+            column=start_column,
+            sticky="w",
+            padx=(28, 14),
+            pady=8,
+        )
+
+        power_area = tk.Frame(panel, bg="#111827")
+        power_area.grid(
+            row=start_row + 4,
+            column=start_column + 1,
+            columnspan=2,
+            sticky="w",
+            pady=8,
+        )
+        self._create_number_field(
+            power_area,
+            "Attack",
+            self.second_commander_attack_power,
+            column=0,
+        )
+        self._create_number_field(
+            power_area,
+            "Defense",
+            self.second_commander_defense_power,
+            column=1,
+        )
+
         color_label = tk.Label(
             panel,
             text="2nd Colors",
@@ -1436,7 +1546,7 @@ class MagicApp(tk.Tk):
             font=("Arial", 13, "bold"),
         )
         color_label.grid(
-            row=start_row + 4,
+            row=start_row + 5,
             column=start_column,
             sticky="w",
             padx=(28, 14),
@@ -1445,19 +1555,20 @@ class MagicApp(tk.Tk):
 
         color_area = tk.Frame(panel, bg="#111827")
         color_area.grid(
-            row=start_row + 4,
+            row=start_row + 5,
             column=start_column + 1,
             columnspan=2,
             sticky="w",
             pady=12,
         )
-        for column, color_name in enumerate(["black", "blue", "green", "red", "white"]):
+        for column, color_name in enumerate(MANA_COLORS):
             self._create_mana_icon_selector(
                 color_area,
                 color_name,
                 column,
                 self.second_commander_color_vars,
                 self.second_mana_icon_labels,
+                self.second_commander_color_cost_vars,
             )
 
         text_label = tk.Label(
@@ -1468,7 +1579,7 @@ class MagicApp(tk.Tk):
             font=("Arial", 13, "bold"),
         )
         text_label.grid(
-            row=start_row + 5,
+            row=start_row + 6,
             column=start_column,
             sticky="w",
             padx=(28, 14),
@@ -1484,7 +1595,7 @@ class MagicApp(tk.Tk):
         )
         second_commander_text_input.insert("1.0", self.second_commander_text.get())
         second_commander_text_input.grid(
-            row=start_row + 5,
+            row=start_row + 6,
             column=start_column + 1,
             columnspan=2,
             sticky="ew",
@@ -1493,7 +1604,7 @@ class MagicApp(tk.Tk):
         second_commander_text_input.bind("<KeyRelease>", self._sync_second_commander_text_input)
         self.second_commander_text_widget = second_commander_text_input
 
-        return start_row + 6
+        return start_row + 7
 
     def _commander_profile_options(self):
         return [CREATE_NEW_COMMANDER_PROFILE, *sorted(self.commander_profiles)]
@@ -1518,7 +1629,17 @@ class MagicApp(tk.Tk):
         self._set_second_commander_text_value(
             self.commander_texts.get(commander_name, "")
         )
+        self.second_commander_attack_power.set(
+            self._clamp_plain_number(profile.get("attack_power", 0), 0, 99)
+        )
+        self.second_commander_defense_power.set(
+            self._clamp_plain_number(profile.get("defense_power", 0), 0, 99)
+        )
         self._set_second_commander_colors(profile.get("colors", []))
+        self._set_color_cost_vars(
+            profile.get("color_cost", {}),
+            self.second_commander_color_cost_vars,
+        )
         self._update_second_commander_image_preview()
         self._update_combined_commander_profile_name()
         self._update_combined_commander_text()
@@ -1588,9 +1709,16 @@ class MagicApp(tk.Tk):
         self.commander_total_wins.set(
             self._clamp_plain_number(profile.get("total_wins", 0), 0, 999999)
         )
+        self.commander_attack_power.set(
+            self._clamp_plain_number(profile.get("attack_power", 0), 0, 99)
+        )
+        self.commander_defense_power.set(
+            self._clamp_plain_number(profile.get("defense_power", 0), 0, 99)
+        )
         self._set_commander_image_path(profile.get("image_path", ""))
         self._set_commander_text_value(self.commander_texts.get(selected_profile, ""))
         self._set_commander_colors(profile.get("colors", []))
+        self._set_color_cost_vars(profile.get("color_cost", {}), self.commander_color_cost_vars)
         self._load_second_commander_data(profile.get("second_commander", {}))
         if self.second_commander_enabled.get():
             self._update_combined_commander_profile_name()
@@ -1602,9 +1730,12 @@ class MagicApp(tk.Tk):
         self.primary_commander_name = ""
         self.commander_profile_name.set("")
         self.commander_total_wins.set(0)
+        self.commander_attack_power.set(0)
+        self.commander_defense_power.set(0)
         self._set_commander_image_path("")
         self._set_commander_text_value("")
         self._set_commander_colors([])
+        self._set_color_cost_vars({}, self.commander_color_cost_vars)
         self._load_second_commander_data({})
         self._update_commander_image_preview()
 
@@ -1620,14 +1751,20 @@ class MagicApp(tk.Tk):
         self._set_second_commander_text_value(
             self.commander_texts.get(profile["name"], "")
         )
+        self.second_commander_attack_power.set(profile["attack_power"])
+        self.second_commander_defense_power.set(profile["defense_power"])
         self._set_second_commander_colors(profile["colors"])
+        self._set_color_cost_vars(profile["color_cost"], self.second_commander_color_cost_vars)
         self._update_second_commander_image_preview()
 
     def _clear_second_commander_data(self):
         self.second_commander_name.set("")
         self._set_second_commander_image_path("")
         self._set_second_commander_text_value("")
+        self.second_commander_attack_power.set(0)
+        self.second_commander_defense_power.set(0)
         self._set_second_commander_colors([])
+        self._set_color_cost_vars({}, self.second_commander_color_cost_vars)
         self._update_second_commander_image_preview()
 
     def _set_commander_colors(self, selected_colors):
@@ -1649,11 +1786,22 @@ class MagicApp(tk.Tk):
                     image=self._mana_icon_image(color_name, color_var.get())
                 )
 
+    def _set_color_cost_vars(self, color_cost, color_cost_vars):
+        clean_color_cost = self._clean_color_cost(color_cost)
+        for color_name, color_var in color_cost_vars.items():
+            color_var.set(clean_color_cost[color_name])
+
     def _selected_commander_colors(self):
         return self._selected_colors(self.commander_color_vars)
 
     def _selected_second_commander_colors(self):
         return self._selected_colors(self.second_commander_color_vars)
+
+    def _selected_commander_color_cost(self):
+        return self._selected_color_cost(self.commander_color_cost_vars)
+
+    def _selected_second_commander_color_cost(self):
+        return self._selected_color_cost(self.second_commander_color_cost_vars)
 
     def _selected_colors(self, color_vars):
         return [
@@ -1662,7 +1810,53 @@ class MagicApp(tk.Tk):
             if color_var.get()
         ]
 
-    def _create_mana_icon_selector(self, parent, color_name, column, color_vars, icon_labels):
+    def _selected_color_cost(self, color_cost_vars):
+        return {
+            color_name: self._clamp_input(
+                color_var,
+                minimum=0,
+                maximum=99,
+            )
+            for color_name, color_var in color_cost_vars.items()
+        }
+
+    def _create_number_field(self, parent, label_text, variable, column):
+        field_area = tk.Frame(parent, bg="#111827")
+        field_area.grid(row=0, column=column, padx=(0, 14), sticky="w")
+
+        label = tk.Label(
+            field_area,
+            text=label_text,
+            bg="#111827",
+            fg="#ffffff",
+            font=("Arial", 10, "bold"),
+        )
+        label.pack(anchor="w")
+
+        number_input = tk.Spinbox(
+            field_area,
+            from_=0,
+            to=99,
+            textvariable=variable,
+            width=4,
+            font=("Arial", 11, "bold"),
+            bg="#f8fafc",
+            fg="#111827",
+            justify="center",
+        )
+        number_input.pack(anchor="w", pady=(3, 0))
+        number_input.bind("<KeyPress>", self._clear_commander_profile_status)
+        number_input.bind("<ButtonRelease-1>", self._clear_commander_profile_status)
+
+    def _create_mana_icon_selector(
+        self,
+        parent,
+        color_name,
+        column,
+        color_vars,
+        icon_labels,
+        color_cost_vars=None,
+    ):
         selected = color_vars[color_name].get()
         icon = self._mana_icon_image(color_name, selected)
         icon_label = tk.Label(parent, image=icon, bg="#111827")
@@ -1679,6 +1873,22 @@ class MagicApp(tk.Tk):
         icon_label.bind("<Enter>", lambda event: icon_label.config(cursor="hand2"))
         icon_label.bind("<Leave>", lambda event: icon_label.config(cursor=""))
 
+        if color_cost_vars is not None:
+            cost_input = tk.Spinbox(
+                parent,
+                from_=0,
+                to=99,
+                textvariable=color_cost_vars[color_name],
+                width=3,
+                font=("Arial", 10, "bold"),
+                bg="#f8fafc",
+                fg="#111827",
+                justify="center",
+            )
+            cost_input.grid(row=1, column=column, padx=6, pady=(4, 0))
+            cost_input.bind("<KeyPress>", self._clear_commander_profile_status)
+            cost_input.bind("<ButtonRelease-1>", self._clear_commander_profile_status)
+
     def _toggle_commander_color(self, color_name, icon_label, color_vars):
         self._clear_commander_profile_status()
         selected = not color_vars[color_name].get()
@@ -1692,8 +1902,11 @@ class MagicApp(tk.Tk):
             state_name = "full" if selected else "faded"
             icon_path = MANA_DIR / f"{color_name}_{state_name}_42.png"
             if not icon_path.exists():
-                image = Image.open(source_path).convert("RGBA")
-                image.thumbnail((42, 42), Image.LANCZOS)
+                if color_name == "colorless":
+                    image = self._colorless_mana_icon()
+                else:
+                    image = Image.open(source_path).convert("RGBA")
+                    image.thumbnail((42, 42), Image.LANCZOS)
                 alpha = image.getchannel("A")
                 if not selected:
                     alpha = ImageEnhance.Brightness(alpha).enhance(0.5)
@@ -1702,6 +1915,12 @@ class MagicApp(tk.Tk):
             self.mana_icon_images[cache_key] = tk.PhotoImage(file=icon_path)
 
         return self.mana_icon_images[cache_key]
+
+    def _colorless_mana_icon(self):
+        image = Image.new("RGBA", (42, 42), (0, 0, 0, 0))
+        draw = ImageDraw.Draw(image)
+        draw.ellipse((3, 3, 39, 39), fill="#a3a3a3", outline="#e5e7eb", width=2)
+        return image
 
     def _update_commander_image_preview(self):
         if self.commander_preview_canvas is None:
@@ -1881,7 +2100,18 @@ class MagicApp(tk.Tk):
                 minimum=0,
                 maximum=999999,
             ),
+            "attack_power": self._clamp_input(
+                self.commander_attack_power,
+                minimum=0,
+                maximum=99,
+            ),
+            "defense_power": self._clamp_input(
+                self.commander_defense_power,
+                minimum=0,
+                maximum=99,
+            ),
             "colors": self._selected_commander_colors(),
+            "color_cost": self._selected_commander_color_cost(),
             "second_commander": {
                 "enabled": self.second_commander_enabled.get(),
                 "name": self.second_commander_name.get().strip()
@@ -1893,9 +2123,26 @@ class MagicApp(tk.Tk):
                 "text_path": app_relative_path(COMMANDER_TEXT_FILE)
                 if self.second_commander_enabled.get()
                 else "",
+                "attack_power": self._clamp_input(
+                    self.second_commander_attack_power,
+                    minimum=0,
+                    maximum=99,
+                )
+                if self.second_commander_enabled.get()
+                else 0,
+                "defense_power": self._clamp_input(
+                    self.second_commander_defense_power,
+                    minimum=0,
+                    maximum=99,
+                )
+                if self.second_commander_enabled.get()
+                else 0,
                 "colors": self._selected_second_commander_colors()
                 if self.second_commander_enabled.get()
                 else [],
+                "color_cost": self._selected_second_commander_color_cost()
+                if self.second_commander_enabled.get()
+                else self._empty_color_cost(),
             },
         }
         self._load_commander_texts()
@@ -2505,8 +2752,10 @@ class MagicApp(tk.Tk):
         self.life_totals = [tk.IntVar(value=life_total) for _ in range(player_count)]
         self.game_life_text_items = []
         self.game_pending_change_items = []
+        self.game_commander_damage_flash_items = []
         self.pending_counter_changes = {}
         self.pending_counter_timers = {}
+        self.commander_damage_flash_timers = {}
         self.commander_damage_totals = [
             [0 for _ in range(player_count)]
             for _ in range(player_count)
@@ -2566,6 +2815,16 @@ class MagicApp(tk.Tk):
                 font=("Arial", 30, "bold"),
             )
             self.game_life_text_items.append((box, life_text))
+            commander_damage_flash_text = box.create_text(
+                0,
+                0,
+                text="",
+                fill="#ef4444",
+                font=("Arial", 18, "bold"),
+            )
+            self.game_commander_damage_flash_items.append(
+                (box, commander_damage_flash_text)
+            )
 
             pending_increase_box = box.create_rectangle(
                 0,
@@ -2654,6 +2913,7 @@ class MagicApp(tk.Tk):
                     player_text,
                     commander_profile_text,
                     life_text,
+                    commander_damage_flash_text,
                     pending_increase_box,
                     pending_increase_text,
                     pending_decrease_box,
@@ -2678,6 +2938,7 @@ class MagicApp(tk.Tk):
                     player_text,
                     commander_profile_text,
                     life_text,
+                    commander_damage_flash_text,
                     pending_increase_box,
                     pending_increase_text,
                     pending_decrease_box,
@@ -2896,10 +3157,15 @@ class MagicApp(tk.Tk):
         if not commander_hidden:
             self._draw_commander_text_boxes(canvas, commander_name, width, height)
 
+        canvas.delete("commander_stats")
+        if not commander_hidden:
+            self._draw_commander_stats(canvas, commander_name, width, height)
+
         (
             player_text,
             commander_profile_text,
             life_text,
+            commander_damage_flash_text,
             pending_increase_box,
             pending_increase_text,
             pending_decrease_box,
@@ -2918,6 +3184,7 @@ class MagicApp(tk.Tk):
             player_text,
             commander_profile_text,
             life_text,
+            commander_damage_flash_text,
             pending_increase_box,
             pending_increase_text,
             pending_decrease_box,
@@ -2960,6 +3227,7 @@ class MagicApp(tk.Tk):
             "green": "#15803d",
             "red": "#b91c1c",
             "white": "#d1d5db",
+            "colorless": "#737373",
         }
         selected_colors = [color for color in colors if color in palette]
         if not selected_colors:
@@ -3032,6 +3300,64 @@ class MagicApp(tk.Tk):
             font_size -= 1
             canvas.itemconfig(text_item, font=("Arial", font_size, "bold"))
 
+    def _draw_commander_stats(self, canvas, commander_name, width, height):
+        profile = self._commander_profile_for_game(commander_name)
+        color_cost = self._clean_color_cost(profile.get("color_cost", {}))
+        nonzero_pips = [
+            (color_name, color_cost[color_name])
+            for color_name in MANA_COLORS
+            if color_cost[color_name] > 0
+        ]
+
+        margin = max(10, width // 45)
+        icon_size = 42
+        icon_spacing = 4
+        bottom_y = height - margin
+        power_font_size = max(11, min(18, min(width, height) // 16))
+        attack = self._clamp_plain_number(profile.get("attack_power", 0), 0, 99)
+        defense = self._clamp_plain_number(profile.get("defense_power", 0), 0, 99)
+        power_text = f"{attack}/{defense}"
+
+        canvas.create_text(
+            width - margin,
+            bottom_y,
+            text=power_text,
+            fill="#ffffff",
+            font=("Arial", power_font_size, "bold"),
+            anchor="se",
+            tags="commander_stats",
+        )
+
+        if not nonzero_pips:
+            return
+
+        pip_total_width = (
+            (len(nonzero_pips) * icon_size)
+            + ((len(nonzero_pips) - 1) * icon_spacing)
+        )
+        start_x = max(margin, width - margin - pip_total_width)
+        pip_y = bottom_y - power_font_size - icon_size // 2 - 6
+
+        for index, (color_name, pip_count) in enumerate(nonzero_pips):
+            center_x = start_x + (index * (icon_size + icon_spacing)) + icon_size // 2
+            canvas.create_image(
+                center_x,
+                pip_y,
+                image=self._mana_icon_image(color_name, True),
+                anchor="center",
+                tags="commander_stats",
+            )
+            if pip_count > 1:
+                canvas.create_text(
+                    center_x,
+                    pip_y,
+                    text=str(pip_count),
+                    fill="#111827",
+                    font=("Arial", 16, "bold"),
+                    anchor="center",
+                    tags="commander_stats",
+                )
+
     def _game_commander_text_values(self, commander_name):
         profile = self._commander_profile_for_game(commander_name)
         second_commander = self._clean_second_commander_profile(
@@ -3094,11 +3420,15 @@ class MagicApp(tk.Tk):
         second_commander = self._clean_second_commander_profile(
             profile.get("second_commander", {})
         )
+        color_cost = self._clean_color_cost(profile.get("color_cost", {}))
         return any(
             [
                 profile.get("image_path"),
                 profile.get("text_path"),
                 profile.get("colors"),
+                self._clamp_plain_number(profile.get("attack_power", 0), 0, 99),
+                self._clamp_plain_number(profile.get("defense_power", 0), 0, 99),
+                any(color_cost.values()),
                 second_commander["enabled"],
             ]
         )
@@ -3111,6 +3441,7 @@ class MagicApp(tk.Tk):
         player_text,
         commander_profile_text,
         life_text,
+        commander_damage_flash_text,
         pending_increase_box,
         pending_increase_text,
         pending_decrease_box,
@@ -3126,6 +3457,7 @@ class MagicApp(tk.Tk):
         canvas.coords(player_text, width // 2, height * 0.13)
         canvas.coords(commander_profile_text, width // 2, height * 0.22)
         canvas.coords(life_text, width // 2, height * 0.47)
+        canvas.coords(commander_damage_flash_text, width // 2, height * 0.37)
         canvas.coords(pending_increase_text, width // 2, height * 0.315)
         canvas.coords(pending_decrease_text, width // 2, height * 0.625)
         canvas.coords(wins_text, 12, 12)
@@ -3133,6 +3465,10 @@ class MagicApp(tk.Tk):
         canvas.itemconfig(player_text, font=("Arial", player_size, "bold"))
         canvas.itemconfig(commander_profile_text, font=("Arial", commander_size, "bold"))
         canvas.itemconfig(life_text, font=("Arial", life_size, "bold"))
+        canvas.itemconfig(
+            commander_damage_flash_text,
+            font=("Arial", max(16, life_size // 3), "bold"),
+        )
         pending_size = max(9, min(14, shortest_side // 22))
         canvas.itemconfig(
             pending_increase_text,
@@ -3160,6 +3496,7 @@ class MagicApp(tk.Tk):
         canvas.tag_raise(player_text)
         canvas.tag_raise(commander_profile_text)
         canvas.tag_raise(life_text)
+        canvas.tag_raise(commander_damage_flash_text)
         canvas.tag_raise(pending_increase_box)
         canvas.tag_raise(pending_increase_text)
         canvas.tag_raise(pending_decrease_box)
@@ -3186,17 +3523,43 @@ class MagicApp(tk.Tk):
         pending_amount = self.pending_counter_changes.get(counter_key, 0)
         new_pending_amount = max(-current_value, pending_amount + amount)
 
-        timer = self.pending_counter_timers.pop(counter_key, None)
-        if timer is not None:
-            self.after_cancel(timer)
+        if counter_key[0] == "commander":
+            self._cancel_commander_damage_commit_timer(counter_key[1])
+        else:
+            timer = self.pending_counter_timers.pop(counter_key, None)
+            if timer is not None:
+                self.after_cancel(timer)
 
         if new_pending_amount == 0:
             self.pending_counter_changes.pop(counter_key, None)
         else:
             self.pending_counter_changes[counter_key] = new_pending_amount
-            self.pending_counter_timers[counter_key] = self.after(
+            if counter_key[0] == "commander":
+                self.pending_counter_timers[
+                    self._commander_damage_commit_key(counter_key[1])
+                ] = self.after(
+                    2000,
+                    lambda target=counter_key[1]: self._commit_commander_damage_mode(
+                        target
+                    ),
+                )
+            else:
+                self.pending_counter_timers[counter_key] = self.after(
+                    2000,
+                    lambda key=counter_key: self._commit_counter_change(key),
+                )
+        if (
+            counter_key[0] == "commander"
+            and self._commander_damage_commit_key(counter_key[1])
+            not in self.pending_counter_timers
+        ):
+            self.pending_counter_timers[
+                self._commander_damage_commit_key(counter_key[1])
+            ] = self.after(
                 2000,
-                lambda key=counter_key: self._commit_counter_change(key),
+                lambda target=counter_key[1]: self._commit_commander_damage_mode(
+                    target
+                ),
             )
         self._update_game_life_states()
 
@@ -3229,7 +3592,117 @@ class MagicApp(tk.Tk):
                     source_player_index
                 ] + amount,
             )
+            self.life_totals[target_player_index].set(
+                max(0, self.life_totals[target_player_index].get() - amount)
+            )
+            if self.commander_damage_mode_player == target_player_index:
+                self.commander_damage_mode_player = None
         self._update_game_life_states()
+        if counter_type == "commander":
+            self._show_commander_damage_flash(
+                target_player_index,
+                [(source_player_index, amount)],
+            )
+
+    def _commander_damage_commit_key(self, target_player_index):
+        return ("commander_commit", target_player_index)
+
+    def _cancel_commander_damage_commit_timer(self, target_player_index):
+        timer_key = self._commander_damage_commit_key(target_player_index)
+        timer = self.pending_counter_timers.pop(timer_key, None)
+        if timer is not None:
+            self.after_cancel(timer)
+
+    def _pending_commander_damage_keys(self, target_player_index):
+        return [
+            counter_key
+            for counter_key in self.pending_counter_changes
+            if (
+                counter_key[0] == "commander"
+                and counter_key[1] == target_player_index
+            )
+        ]
+
+    def _commit_commander_damage_mode(self, target_player_index):
+        timer = self.pending_counter_timers.pop(
+            self._commander_damage_commit_key(target_player_index),
+            None,
+        )
+        if timer is not None:
+            try:
+                self.after_cancel(timer)
+            except tk.TclError:
+                pass
+        pending_keys = self._pending_commander_damage_keys(target_player_index)
+        total_life_delta = 0
+        damage_entries = []
+
+        for counter_key in pending_keys:
+            amount = self.pending_counter_changes.pop(counter_key, 0)
+            if not amount:
+                continue
+
+            source_player_index = counter_key[2]
+            self.commander_damage_totals[target_player_index][
+                source_player_index
+            ] = max(
+                0,
+                self.commander_damage_totals[target_player_index][
+                    source_player_index
+                ] + amount,
+            )
+            total_life_delta += amount
+            damage_entries.append((source_player_index, amount))
+
+        if total_life_delta:
+            self.life_totals[target_player_index].set(
+                max(0, self.life_totals[target_player_index].get() - total_life_delta)
+            )
+
+        if self.commander_damage_mode_player == target_player_index:
+            self.commander_damage_mode_player = None
+        self._update_game_life_states()
+        if damage_entries:
+            self._show_commander_damage_flash(target_player_index, damage_entries)
+
+    def _show_commander_damage_flash(self, player_index, damage_entries):
+        if not 0 <= player_index < len(self.game_commander_damage_flash_items):
+            return
+
+        canvas, flash_text = self.game_commander_damage_flash_items[player_index]
+        timer = self.commander_damage_flash_timers.pop(player_index, None)
+        if timer is not None:
+            self.after_cancel(timer)
+
+        display_parts = []
+        for source_player_index, damage_delta in damage_entries:
+            if damage_delta > 0:
+                display_parts.append(f"-{damage_delta} P{source_player_index + 1}")
+            elif damage_delta < 0:
+                display_parts.append(f"+{-damage_delta} P{source_player_index + 1}")
+
+        if not display_parts:
+            self._clear_commander_damage_flash(player_index)
+            return
+
+        display_text = "\n".join(display_parts)
+        display_color = (
+            "#ef4444"
+            if any(damage_delta > 0 for _, damage_delta in damage_entries)
+            else "#86efac"
+        )
+        canvas.itemconfig(flash_text, text=display_text, fill=display_color)
+        canvas.tag_raise(flash_text)
+        self.commander_damage_flash_timers[player_index] = self.after(
+            2000,
+            lambda index=player_index: self._clear_commander_damage_flash(index),
+        )
+
+    def _clear_commander_damage_flash(self, player_index):
+        self.commander_damage_flash_timers.pop(player_index, None)
+        if 0 <= player_index < len(self.game_commander_damage_flash_items):
+            canvas, flash_text = self.game_commander_damage_flash_items[player_index]
+            canvas.itemconfig(flash_text, text="")
 
     def _cancel_pending_counter_changes(self):
         for timer in self.pending_counter_timers.values():
@@ -3239,6 +3712,12 @@ class MagicApp(tk.Tk):
                 pass
         self.pending_counter_timers = {}
         self.pending_counter_changes = {}
+        for timer in self.commander_damage_flash_timers.values():
+            try:
+                self.after_cancel(timer)
+            except tk.TclError:
+                pass
+        self.commander_damage_flash_timers = {}
 
     def _displayed_counter_key(self, player_index):
         if self.commander_damage_mode_player is not None:
@@ -3382,8 +3861,13 @@ class MagicApp(tk.Tk):
             return
 
         if self.commander_damage_mode_player == player_index:
-            self.commander_damage_mode_player = None
+            self._commit_commander_damage_mode(player_index)
+            return
         else:
+            if self.commander_damage_mode_player is not None:
+                self._commit_commander_damage_mode(
+                    self.commander_damage_mode_player
+                )
             self.commander_damage_mode_player = player_index
             self.poison_mode_player = None
         self._update_game_life_states()
@@ -3410,7 +3894,12 @@ class MagicApp(tk.Tk):
             self.poison_mode_player = None
         else:
             self.poison_mode_player = player_index
-            self.commander_damage_mode_player = None
+            if self.commander_damage_mode_player is not None:
+                self._commit_commander_damage_mode(
+                    self.commander_damage_mode_player
+                )
+            else:
+                self.commander_damage_mode_player = None
         self._update_game_life_states()
 
     def _adjust_poison_counter(self, player_index, amount):
